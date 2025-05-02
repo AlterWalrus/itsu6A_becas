@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `checktec`.`usuario` (
   `Apellido_materno` VARCHAR(20) NULL DEFAULT NULL,
   `Correo` VARCHAR(45) NOT NULL,
   `Usuario` VARCHAR(30) NOT NULL,
-  `Contraseña` VARCHAR(255) NOT NULL,
+  `Contrasenia` VARCHAR(255) NOT NULL,
   `Rol` ENUM('Admin', 'Miembro_CESA') NOT NULL,
   `Ultimo_acceso` DATETIME NOT NULL,
   PRIMARY KEY (`id_Usuario`),

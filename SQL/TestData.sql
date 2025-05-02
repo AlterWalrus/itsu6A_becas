@@ -1,0 +1,2 @@
+INSERT INTO `checktec`.`usuario` (`id_Usuario`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `Correo`, `Usuario`, `Contrasenia`, `Rol`, `Ultimo_acceso`) VALUES ('1', 'Rubén Ociel', 'Medina', 'Pérez', 'nose', 'ruben', '123', 'Admin', '2025-02-04 12:00:00');
+INSERT INTO `checktec`.`usuario` (`id_Usuario`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `Correo`, `Usuario`, `Contrasenia`, `Rol`, `Ultimo_acceso`) VALUES ('2', 'Rubén', 'Zamudio', 'González', 'nose2', 'ruben2', '234', 'Miembro_CESA', '2025-02-04 12:00:00');
