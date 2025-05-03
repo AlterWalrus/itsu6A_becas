@@ -11,15 +11,19 @@
   <div class="bg-white/90 p-8 rounded-2xl shadow-xl w-full max-w-xl">
     <div class="flex items-center gap-3 mb-6">
      <h1 class="text-2xl font-bold text-blue-700">Agregar Becado |</h1>
-     <img src="imagenes/huellaDAzul.png" alt="Logo" class="w-10 h-10 -ml-3">
+     <img src="img/huellaDAzul.png" alt="Logo" class="w-10 h-10 -ml-3">
      <span class="text-2xl font-bold text-blue-700 -ml-4">heckTec</span>
     </div>
 
     <!-- Botón para capturar huella -->
 <div class="flex items-center gap-4">
-    <button type="button" onclick="capturarHuella()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+    <!--button type="button" onclick="capturarHuella()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 my-8">
       Capturar Huella
-    </button>
+    </button-->
+	<button type="button" onclick="capturarHuella()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 my-8 flex items-center gap-2">
+		<img src="img/huellaBoton.png" alt="Huella" class="w-6 h-6">
+		Capturar Huella
+	  </button>	  
     <span id="estadoHuella" class="text-gray-600 text-sm">Huella no registrada</span>
   </div>
   
@@ -55,7 +59,7 @@
 
     cerrar.addEventListener("click", () => {
       modal.classList.add("hidden");
-      window.location.href = "dashboard.html"; // Asegúrate del nombre
+      window.location.href = "dashboard.html";
     });
 
     window.cancelar = function () {

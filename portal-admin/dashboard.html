@@ -58,13 +58,17 @@
       <div id="adminPanel" class="mb-8 hidden">
         <h3 class="text-lg font-bold mb-2">Gestión de Becados</h3>
         <div class="flex gap-2 mb-4">
-          <button id="btnAgregar" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow">
-            Agregar Becado
-          </button>
-          <button id="btnModificar" class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 shadow">
+		  <button id="btnAgregar" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow flex items-center gap-2">
+			<img src="img/user.png" alt="Icono usuario" class="w-6 h-6">
+			Agregar Becado
+		  </button>
+		  
+          <button id="btnModificar" class="bg-orange-400 text-white px-4 py-2 rounded hover:bg-orange-500 shadow flex items-center gap-2">
+			<img src="img/compose.png" alt="Huella" class="w-6 h-6">
             Modificar Becado
           </button>
-          <button id="btnEliminar" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 shadow">
+          <button id="btnEliminar" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 shadow flex items-center gap-2">
+			<img src="img/bin.png" alt="Huella" class="w-6 h-6">
             Eliminar Becado
           </button>
         </div>
@@ -79,43 +83,31 @@
       <!-- Tabla de becados -->
 <div class="bg-white bg-opacity-90 shadow-md rounded overflow-hidden">
   <table class="w-full text-left text-sm">
-    <thead class="bg-blue-600 text-white">
-      <tr>
-        <th class="px-4 py-2 hidden checkbox-col">Eliminar</th>
-        <th class="px-4 py-2 w-10">#</th>
-        <th class="px-4 py-2">Nombre</th>
-        <th class="px-4 py-2">Apellido Paterno</th>
-        <th class="px-4 py-2">Apellido Materno</th>
-        <th class="px-4 py-2">No. Control</th>
-        <th class="px-4 py-2">Carrera</th>
-        <th class="px-4 py-2">Semestre</th>
-        <th class="px-4 py-2">Correo</th>
-        <th class="px-4 py-2">Teléfono</th>
-        <th class="px-4 py-2">Cafetería</th>
-        <!-- Columnas de asistencia -->
-        <th class="px-4 py-2">Lun</th>
-        <th class="px-4 py-2">Mar</th>
-        <th class="px-4 py-2">Mié</th>
-        <th class="px-4 py-2">Jue</th>
-        <th class="px-4 py-2">Vie</th>
-        <!-- Estatus de la beca al final -->
-        <th class="px-4 py-2">Estatus Beca</th>
-      </tr>
-    </thead>
+    
     <table id="tablaBecados">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido Paterno</th>
-          <th>Apellido Materno</th>
-          <th>No. Control</th>
-          <th>Carrera</th>
-          <th>Semestre</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-          <th>Estatus de beca</th>
-        </tr>
-      </thead>
+		<thead class="bg-blue-600 text-white">
+			<tr>
+			  <th class="px-0 py-2 hidden checkbox-col">Eliminar</th>
+			  <th class="px-0 py-2 w-10">#</th>
+			  <th class="px-0 py-2">Nombre</th>
+			  <th class="px-0 py-2">Apellido</br>Paterno</th>
+			  <th class="px-0 py-2">Apellido</br>Materno</th>
+			  <th class="px-0 py-2">No. Control</th>
+			  <th class="px-0 py-2">Carrera</th>
+			  <th class="px-0 py-2">Semestre</th>
+			  <th class="px-0 py-2">Correo</th>
+			  <th class="px-0 py-2">Tel.</th>
+			  <th class="px-0 py-2">Cafe.</th>
+			  <!-- Columnas de asistencia -->
+			  <th class="px-0 py-2">L</th>
+			  <th class="px-0 py-2">M</th>
+			  <th class="px-0 py-2">X</th>
+			  <th class="px-0 py-2">J</th>
+			  <th class="px-0 py-2">V</th>
+			  <!-- Estatus de la beca al final -->
+			  <th class="px-0 py-2">Estatus Beca</th>
+			</tr>
+		  </thead>
       <tbody id="cuerpoTablaBecados">
         <!-- Aquí se llenarán los datos -->
       </tbody>
@@ -326,7 +318,7 @@ fetch('php/listar_becados.php')
       	tr.classList.add('editable-row');
 		
 		tr.innerHTML = `
-        <td class="px-4 py-2 hidden checkbox-col">
+        <td class="px-2 py-2 hidden checkbox-col">
           <input type="checkbox" class="checkbox-becado" />
         </td>
         <td class="px-4 py-2">${index + 1}</td>
@@ -336,15 +328,15 @@ fetch('php/listar_becados.php')
         <td class="px-4 py-2 editable" data-key="noControl">${becado.No_Control}</td>
         <td class="px-4 py-2 editable" data-key="carrera">${becado.Carrera}</td>
         <td class="px-4 py-2 editable" data-key="semestre">${becado.Semestre}</td>
-        <td class="px-4 py-2 editable" data-key="correo">${becado.Correo}</td>
-        <td class="px-4 py-2 editable" data-key="telefono">${becado.Telefono}</td>
-        <td class="px-4 py-2">A</td> <!-- Por ahora se muestra A, puedes reemplazarlo más adelante -->
-        <td class="px-4 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-4 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-4 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-4 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-4 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-4 py-2">
+        <td class="px-3 py-2 editable" data-key="correo">${becado.Correo}</td>
+        <td class="px-3 py-2 editable" data-key="telefono">${becado.Telefono}</td>
+        <td class="px-2 py-2">A</td> <!-- Por ahora se muestra A, puedes reemplazarlo más adelante -->
+        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
+        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
+        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
+        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
+        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
+        <td class="px-2 py-2">
           <select class="rounded px-2 py-1 border border-gray-300">
             <option value="1" ${becado.estatus_beca ? 'selected' : ''}>Activo</option>
             <option value="0" ${!becado.estatus_beca ? 'selected' : ''}>Suspendido</option>
