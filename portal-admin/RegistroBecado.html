@@ -33,11 +33,33 @@
       <input type="text" placeholder="Apellido Paterno" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
       <input type="text" placeholder="Apellido Materno" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
       <input type="text" placeholder="No. de Control" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input type="text" placeholder="Carrera" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input type="number" placeholder="Semestre" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input type="email" placeholder="Correo Electrónico" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+	  <input type="email" placeholder="Correo Electrónico" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
       <input type="tel" placeholder="Teléfono" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
+      <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+		<option value="" disabled selected>Carrera</option>
+		<option>Ingeniería en Sistemas Computacionales</option>
+		<option>Ingeniería en Mecatrónica</option>
+		<option>Ingeniería en Alimentos</option>
+	  </select>
+      <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+		<option value="" disabled selected>semestre</option>
+		<option value="1">1°</option>
+		<option value="2">2°</option>
+		<option value="3">3°</option>
+		<option value="4">4°</option>
+		<option value="5">5°</option>
+		<option value="6">6°</option>
+		<option value="7">7°</option>
+		<option value="8">8°</option>
+		<option value="9">9°</option>
+		<option value="10">10°</option>
+	  </select>
+	  <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+		<option value="" disabled selected>Cafetería</option>
+		<option>A</option>
+		<option>D</option>
+		<option>F</option>
+	  </select>
       <div class="flex justify-between mt-6">
         <button type="button" onclick="cancelar()" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition">Cancelar</button>
         <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Guardar</button>

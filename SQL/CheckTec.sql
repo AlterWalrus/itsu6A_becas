@@ -34,13 +34,20 @@ CREATE TABLE IF NOT EXISTS `checktec`.`alumno` (
   `No_Control` INT(11) NOT NULL,
   `Carrera` ENUM('Sistemas', 'Mecatrónica', 'Mecánica', 'Civil', 'Alimentarias', 'Electrónica', 'Industrial', 'Administración', 'Agricola') NOT NULL,
   `Semestre` ENUM('Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto', 'Séptimo', 'Octavo', 'Noveno', 'Décimo') NOT NULL,
+  `id_Cafeteria` INT(11) NOT NULL,
   `Correo` VARCHAR(45) NULL DEFAULT NULL,
   `Telefono` VARCHAR(15) NULL DEFAULT NULL,
   `estatus_beca` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_Alumno`),
   UNIQUE INDEX `No_Control_UNIQUE` (`No_Control` ASC),
   UNIQUE INDEX `Correo_UNIQUE` (`Correo` ASC),
-  UNIQUE INDEX `Telefono_UNIQUE` (`Telefono` ASC))
+  UNIQUE INDEX `Telefono_UNIQUE` (`Telefono` ASC),
+  INDEX `fk_Alumno_Cafeteria1_idx` (`id_Cafeteria` ASC),
+  CONSTRAINT `fk_Alumno_Cafeteria1`
+    FOREIGN KEY (`id_Cafeteria`)
+    REFERENCES `checktec`.`cafeteria` (`id_Cafeteria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

@@ -5,8 +5,8 @@ INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUE
 INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUES ('2', 'D', '30');
 INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUES ('3', 'F', '30');
 
-INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `estatus_beca`) VALUES ('1', 'Pepito', 'Pipipu', 'Pirulin', '22123123', 'Sistemas', 'Segundo', '1');
-INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `estatus_beca`) VALUES ('2', 'Benito', 'Camelos', 'Huevos', '11223344', 'Sistemas', 'Tercero', '1');
-INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `estatus_beca`) VALUES ('3', 'Rosa', 'Melano', 'Wiriri', '32323232', 'Sistemas', 'Segundo', '1');
-INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `estatus_beca`) VALUES ('4', 'Lalo', 'Onganiza', 'Relarga', '44543543', 'Sistemas', 'Primero', '1');
-INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `estatus_beca`) VALUES ('5', 'Zacarías', 'Blanco', 'Del Fierro', '12312312', 'Sistemas', 'Primero', '1');
+INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `id_Cafeteria`, `estatus_beca`) VALUES ('1', 'Pepito', 'Pipipu', 'Pirulin', '22123123', 'Sistemas', 'Segundo', '1', '1');
+INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `id_Cafeteria`, `estatus_beca`) VALUES ('2', 'Benito', 'Camelos', 'Huevos', '11223344', 'Sistemas', 'Tercero', '1', '1');
+INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `id_Cafeteria`, `estatus_beca`) VALUES ('3', 'Rosa', 'Melano', 'Wiriri', '32323232', 'Sistemas', 'Segundo', '2', '1');
+INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `id_Cafeteria`, `estatus_beca`) VALUES ('4', 'Lalo', 'Onganiza', 'Relarga', '44543543', 'Sistemas', 'Primero', '1', '1');
+INSERT INTO `checktec`.`alumno` (`id_Alumno`, `Nombre`, `Apellido_paterno`, `Apellido_materno`, `No_Control`, `Carrera`, `Semestre`, `id_Cafeteria`, `estatus_beca`) VALUES ('5', 'Zacarías', 'Blanco', 'Del Fierro', '12312312', 'Sistemas', 'Primero', '3', '1');

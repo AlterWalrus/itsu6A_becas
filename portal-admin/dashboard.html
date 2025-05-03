@@ -51,7 +51,7 @@
       <!-- Bienvenida -->
       <div class="flex items-center mb-4 gap-2">
         <h2 class="text-2xl font-semibold">¡Bienvenido, <span id="nombreUsuario">[Nombre del usuario]</span>!</h2>
-        <img src="img/CESA.png" alt="Logo" class="w-10 h-10 -ml-1">
+        <img src="img/CESA_noborder.png" alt="Logo" class="w-12 h-12 -ml-1">
       </div>
 
       <!-- Panel dinámico según rol -->
@@ -60,16 +60,16 @@
         <div class="flex gap-2 mb-4">
 		  <button id="btnAgregar" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow flex items-center gap-2">
 			<img src="img/user.png" alt="Icono usuario" class="w-6 h-6">
-			Agregar Becado
+			Agregar
 		  </button>
 		  
           <button id="btnModificar" class="bg-orange-400 text-white px-4 py-2 rounded hover:bg-orange-500 shadow flex items-center gap-2">
 			<img src="img/compose.png" alt="Huella" class="w-6 h-6">
-            Modificar Becado
+            Modificar
           </button>
           <button id="btnEliminar" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 shadow flex items-center gap-2">
 			<img src="img/bin.png" alt="Huella" class="w-6 h-6">
-            Eliminar Becado
+            Eliminar
           </button>
         </div>
 
@@ -131,8 +131,8 @@
 
   <script>
   const usuario = {
-    nombre: "Rubén",
-    rol: "Admin"
+    nombre: localStorage.getItem("usuarioNombre"),
+    rol: localStorage.getItem("usuarioRol")
   };
 
   document.querySelector('h2').innerText = `¡Bienvenido, ${usuario.nombre}!`;
@@ -231,7 +231,9 @@
   });
 
   function cerrarSesion() { {
-  window.location.href = "index.html"; 
+	localStorage.removeItem("usuarioNombre");
+	localStorage.removeItem("usuarioRol");
+  	window.location.href = "index.html";
 } };
 
   // Cerrar el menú contextual si se hace clic fuera de él
