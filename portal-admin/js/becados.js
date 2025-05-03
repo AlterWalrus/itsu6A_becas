@@ -1,10 +1,14 @@
 fetch('listar_becados.php')
   .then(response => response.json())
   .then(data => {
+	console.log("hey");
+	/*
     const tbody = document.getElementById('cuerpoTablaBecados');
 
     data.forEach(alumno => {
       const tr = document.createElement('tr');
+
+	
 
       tr.innerHTML = `
         <td>${alumno.Nombre}</td>
@@ -26,7 +30,9 @@ fetch('listar_becados.php')
 
       tbody.appendChild(tr);
     });
+	*/
+
   })
   .catch(err => {
-    console.error("Error al obtener los becados:", err);
+    console.error("Error al obtener los becados (js):", err);
   });

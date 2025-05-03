@@ -315,17 +315,17 @@ function detectarEnterEliminar(e) {
 
 
   // === CARGAR BECADOS DINÁMICAMENTE DESDE PHP ===
-fetch('listar_becados.php')
+fetch('php/listar_becados.php')
   .then(response => response.json())
   .then(data => {
-    const tbody = document.getElementById('tablaUsuarios');
+	const tbody = document.getElementById('cuerpoTablaBecados');
     tbody.innerHTML = ""; // Limpiar antes de llenar
 
     data.forEach((becado, index) => {
-      const tr = document.createElement('tr');
-      tr.classList.add('editable-row');
-
-      tr.innerHTML = `
+      	const tr = document.createElement('tr');
+      	tr.classList.add('editable-row');
+		
+		tr.innerHTML = `
         <td class="px-4 py-2 hidden checkbox-col">
           <input type="checkbox" class="checkbox-becado" />
         </td>
@@ -353,6 +353,8 @@ fetch('listar_becados.php')
       `;
 
       tbody.appendChild(tr);
+	  
+      	
     });
   })
   .catch(error => {
@@ -361,6 +363,6 @@ fetch('listar_becados.php')
   </script>
 
 <!-- JS de becados.js -->
-<script src="js/becados.js"></script>
+<!--script src="js/becados.js"></script-->
 </body>
 </html>
