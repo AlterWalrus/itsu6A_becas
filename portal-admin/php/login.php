@@ -4,8 +4,7 @@ require 'conexion.php';
 $usuario = $_POST['usuario'];
 $contrasenia = $_POST['contrasenia'];
 
-
-$sql = "SELECT * FROM usuario WHERE usuario = ? AND contrasenia = ?";
+$sql = "SELECT * FROM usuario WHERE usuario = ? AND contrasenia = ?;";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $usuario, $contrasenia);
 $stmt->execute();

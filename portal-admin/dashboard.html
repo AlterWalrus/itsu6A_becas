@@ -135,6 +135,8 @@
     rol: localStorage.getItem("usuarioRol")
   };
 
+  console.log(usuario.rol);
+
   document.querySelector('h2').innerText = `¡Bienvenido, ${usuario.nombre}!`;
   if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
     document.getElementById('adminPanel').classList.remove('hidden');
