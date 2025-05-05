@@ -1,106 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agregar Becado | CheckTec</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Agregar Becado | CheckTec</title>
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen bg-gradient-to-r from-blue-600 to-purple-500 flex items-center justify-center">
 
-  <div class="bg-white/90 p-8 rounded-2xl shadow-xl w-full max-w-xl">
-    <div class="flex items-center gap-3 mb-6">
-     <h1 class="text-2xl font-bold text-blue-700">Agregar Becado |</h1>
-     <img src="img/huellaDAzul.png" alt="Logo" class="w-10 h-10 -ml-3">
-     <span class="text-2xl font-bold text-blue-700 -ml-4">heckTec</span>
-    </div>
+	<div class="bg-white/90 p-8 rounded-2xl shadow-xl w-full max-w-xl">
+		<div class="flex items-center gap-3 mb-6">
+			<h1 class="text-2xl font-bold text-blue-700">Agregar Becado |</h1>
+			<img src="img/huellaDAzul.png" alt="Logo" class="w-10 h-10 -ml-3">
+			<span class="text-2xl font-bold text-blue-700 -ml-4">heckTec</span>
+		</div>
 
-    <!-- Botón para capturar huella -->
-    <div class="flex items-center gap-4">
-      <button type="button" id="btnCapturarHuella" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 my-8 flex items-center gap-2">
-        <img src="img/huellaBoton.png" alt="Huella" class="w-6 h-6">
-        Capturar Huella
-      </button>  
-      <span id="estadoHuella" class="text-gray-600 text-sm">Huella no registrada</span>
-    </div>
+		<!-- Botón para capturar huella -->
+		<div class="flex items-center gap-4">
+			<button type="button" id="btnCapturarHuella"
+				class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 my-8 flex items-center gap-2">
+				<img src="img/huellaBoton.png" alt="Huella" class="w-6 h-6">
+				Capturar Huella
+			</button>
+			<span id="estadoHuella" class="text-gray-600 text-sm">Huella no registrada</span>
+		</div>
 
-    <form id="formBecado" class="space-y-4">
-      <input id="Nombre" type="text" placeholder="Nombre" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input id="ApellidoP" type="text" placeholder="Apellido Paterno" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input id="ApellidoM" type="text" placeholder="Apellido Materno" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input id="NoControl" type="text" placeholder="No. de Control" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input id="Email" type="email" placeholder="Correo Electrónico" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <input id="Tel" type="tel" placeholder="Teléfono" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <select id="Carrera" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="" disabled selected>Carrera</option>
-        <option value="Sistemas">Ingeniería en Sistemas Computacionales</option>
-        <option value="Mecatronica">Ingeniería en Mecatrónica</option>
-        <option value="Alimtentarias">Ingeniería en Alimentos</option>
-      </select>
-      <select id="Semestre" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="" disabled selected>Semestre</option>
-        <option value="1">1°</option>
-        <option value="2">2°</option>
-        <option value="3">3°</option>
-        <option value="4">4°</option>
-        <option value="5">5°</option>
-        <option value="6">6°</option>
-        <option value="7">7°</option>
-        <option value="8">8°</option>
-        <option value="9">9°</option>
-        <option value="10">10°</option>
-      </select>
-      <select id="Cafeteria" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="" disabled selected>Cafetería</option>
-        <option>A</option>
-        <option>D</option>
-        <option>F</option>
-      </select>
-      <div class="flex justify-between mt-6">
-        <button type="button" id="btnCancelar" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition">Cancelar</button>
-        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Guardar</button>
-      </div>
-    </form>
-  </div>
+		<form id="formBecado" class="space-y-4">
+			<input id="Nombre" type="text" placeholder="Nombre"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<input id="ApellidoP" type="text" placeholder="Apellido Paterno"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<input id="ApellidoM" type="text" placeholder="Apellido Materno"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<input id="NoControl" type="text" placeholder="No. de Control"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<input id="Email" type="email" placeholder="Correo Electrónico"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<input id="Tel" type="tel" placeholder="Teléfono"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<select id="Carrera"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+				<option value="" disabled selected>Carrera</option>
+				<option value="1">Ingeniería en Sistemas Computacionales</option>
+				<option value="2">Ingeniería en Mecatrónica</option>
+				<option value="3">Ingeniería en Alimentos</option>
+			</select>
+			<select id="Semestre"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+				<option value="" disabled selected>Semestre</option>
+				<option value="1">1°</option>
+				<option value="2">2°</option>
+				<option value="3">3°</option>
+				<option value="4">4°</option>
+				<option value="5">5°</option>
+				<option value="6">6°</option>
+				<option value="7">7°</option>
+				<option value="8">8°</option>
+				<option value="9">9°</option>
+				<option value="10">10°</option>
+			</select>
+			<select id="Cafeteria"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+				<option value="" disabled selected>Cafetería</option>
+				<option value="1">A</option>
+				<option value="2">D</option>
+				<option value="3">F</option>
+			</select>
+			<div class="flex justify-between mt-6">
+				<button type="button" id="btnCancelar"
+					class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition">Cancelar</button>
+				<button type="submit"
+					class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Guardar</button>
+			</div>
+		</form>
+	</div>
 
-  <script>
-    document.getElementById("btnCapturarHuella").addEventListener("click", () => {
-      console.log("Captura de huella simulada");
-    });
+	<script>
+		document.getElementById("btnCapturarHuella").addEventListener("click", () => {
+			console.log("Captura de huella");
+		});
 
-    document.getElementById("formBecado").addEventListener("submit", function (e) {
-      e.preventDefault();
-	  var nom = document.getElementById("Nombre").value;
-	  var app = document.getElementById("ApellidoP").value;
-	  var apm = document.getElementById("ApellidoM").value;
-	  var nct = document.getElementById("NoControl").value;
-	  var eml = document.getElementById("Email").value;
-	  var tel = document.getElementById("Tel").value;
-	  var crr = document.getElementById("Carrera").value;
-	  var sem = document.getElementById("Semestre").value;
-	  //var caf = document.getElementById("Cafeteria").value;
-	  var caf = 1;
-	  
-	  if(	nom === '' ||
-	  		app === '' ||
-			apm === '' ||
-			nct === '' ||
-			eml === '' ||
-			tel === '' ||
-			crr === '' ||
-			sem === '' ||
-			caf === ''
-	  ){
-		alert("LLENA LA WEA CTM");
-		return;
-	  }
+		document.getElementById("formBecado").addEventListener("submit", function (e) {
+			e.preventDefault();
+			var nom = document.getElementById("Nombre").value;
+			var app = document.getElementById("ApellidoP").value;
+			var apm = document.getElementById("ApellidoM").value;
+			var nct = document.getElementById("NoControl").value;
+			var eml = document.getElementById("Email").value;
+			var tel = document.getElementById("Tel").value;
+			var crr = document.getElementById("Carrera").value;
+			var sem = document.getElementById("Semestre").value;
+			var caf = document.getElementById("Cafeteria").value;
 
-	  fetch("php/registro_becado.php", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		body: 	`nom=${encodeURIComponent(nom)}
+			//Validacion de todos los campos
+			if (nom === '' || app === '' || apm === '' || nct === '' ||
+				eml === '' || tel === '' || crr === '' || sem === '' || caf === ''
+			) {
+				alert("Por favor, llenar todos los campos.");
+				return;
+			}
+
+			fetch("php/registro_becado.php", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: `nom=${encodeURIComponent(nom)}
 				&app=${encodeURIComponent(app)}
 				&apm=${encodeURIComponent(apm)}
 				&nct=${encodeURIComponent(nct)}
@@ -109,25 +116,42 @@
 				&crr=${encodeURIComponent(crr)}
 				&sem=${encodeURIComponent(sem)}
 				&caf=${encodeURIComponent(caf)}`
-		})
-		.then(response => response.json())
-		.then(data => {
-			console.log("ok");
-			//TODO: LA CARRERA Y EL SEMESTRE NO SE GUARDAN, SEPA LA ROÑA PQ
-			console.log(data.debug);
-		})
-		.catch(error => {
-			console.error("Error en la solicitud:", error);
+			})
+				.then(response => response.json())
+				.then(data => {
+					if (data.status === "ok") {
+						document.getElementById("exitoBox").classList.remove("hidden");
+						document.getElementById("btnIrDashboard").addEventListener("click", () => {
+							window.location.href = "dashboard.html";
+						});
+					} else {
+						alert("Hubo un error al registrar: " + (data.error || "desconocido"));
+					}
+				})
+				.catch(error => {
+					console.error("Error en la solicitud:", error);
+				});
 		});
-    });
 
-    document.getElementById("btnCancelar").addEventListener("click", () => {
-      console.log("Cancelación solicitada");
-	  if(confirm("¿Cancelar registro?")){
-		window.location.href = "dashboard.html";
-	  }
-    });
-  </script>
+		document.getElementById("btnCancelar").addEventListener("click", () => {
+			console.log("Cancelación solicitada");
+			if (confirm("¿Cancelar registro?")) {
+				window.location.href = "dashboard.html";
+			}
+		});
+	</script>
+
+	<!-- Caja de éxito -->
+	<div id="exitoBox" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+	<div class="bg-white p-6 rounded-xl shadow-lg text-center">
+	  <h2 class="text-xl font-bold text-green-600 mb-4">¡Registro exitoso!</h2>
+	  <button id="btnIrDashboard" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+		Ok
+	  </button>
+	</div>
+  </div>
+  
 
 </body>
+
 </html>

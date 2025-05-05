@@ -1,364 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel | CheckTec</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Panel | CheckTec</title>
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex flex-col bg-gradient-to-r from-blue-600 to-purple-500">
 
 
-  <!-- Header -->
-  <header class="bg-white shadow-md p-4 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <img src="img/huellaDAzul.png" alt="Logo" class="w-8 h-8 -mr-3">
-      <h1 class="text-xl font-bold text-blue-600">heckTec</h1>
-    </div>
-     <!-- Menú contextual -->
-     <div class="relative">
-        <button id="menuToggle" class="p-2 rounded hover:bg-blue-100 transition">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
-               viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-        <div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-10">
-          <ul class="text-gray-700">
-            <li>
-              <a href="javascript:void(0)" onclick="cerrarSesion()"
-                 class="block px-4 py-2 hover:bg-gray-100">Cerrar sesión</a>
-            </li>
-            <li>
-              <a href="HistorialBecas.html" class="block px-4 py-2 hover:bg-gray-100">Historial de Becas</a>
-            </li>
-            <li id="adminOption" class="hidden">
-              <a href="Usuarios.html" class="block px-4 py-2 hover:bg-gray-100">Administrar usuarios</a>
-            </li>
-            <li id="registrosCambiosOption" class="hidden">
-              <a href="RegistroCambios.html" class="block px-4 py-2 hover:bg-gray-100">Registro de Cambios</a>
-            </li>        
-          </ul>     
-        </div>
-      </div>      
-  </header>
+	<!-- Header -->
+	<header class="bg-white shadow-md p-4 flex justify-between items-center">
+		<div class="flex items-center gap-2">
+			<img src="img/huellaDAzul.png" alt="Logo" class="w-8 h-8 -mr-3">
+			<h1 class="text-xl font-bold text-blue-600">heckTec</h1>
+		</div>
+		<!-- Menú contextual -->
+		<div class="relative">
+			<button id="menuToggle" class="p-2 rounded hover:bg-blue-100 transition">
+				<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
+					viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			</button>
+			<div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-10">
+				<ul class="text-gray-700">
+					<li>
+						<a href="javascript:void(0)" onclick="cerrarSesion()"
+							class="block px-4 py-2 hover:bg-gray-100">Cerrar sesión</a>
+					</li>
+					<li>
+						<a href="HistorialBecas.html" class="block px-4 py-2 hover:bg-gray-100">Historial de Becas</a>
+					</li>
+					<li id="adminOption" class="hidden">
+						<a href="Usuarios.html" class="block px-4 py-2 hover:bg-gray-100">Administrar usuarios</a>
+					</li>
+					<li id="registrosCambiosOption" class="hidden">
+						<a href="RegistroCambios.html" class="block px-4 py-2 hover:bg-gray-100">Registro de Cambios</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</header>
 
-  <!-- Contenido principal -->
-    <main class="flex-1 w-[98%] mx-auto p-6">
-    <!-- Contenedor semitransparente con sombra -->
-    <div class="bg-white/70 p-4 rounded shadow-md">
+	<!-- Contenido principal -->
+	<main class="flex-1 w-[98%] mx-auto p-6">
+		<!-- Contenedor semitransparente con sombra -->
+		<div class="bg-white/70 p-4 rounded shadow-md">
 
-      <!-- Bienvenida -->
-      <div class="flex items-center mb-4 gap-2">
-        <h2 class="text-2xl font-semibold">¡Bienvenido, <span id="nombreUsuario">[Nombre del usuario]</span>!</h2>
-        <img src="img/CESA_noborder.png" alt="Logo" class="w-12 h-12 -ml-1">
-      </div>
+			<!-- Bienvenida -->
+			<div class="flex items-center mb-4 gap-2">
+				<h2 class="text-2xl font-semibold">¡Bienvenido, <span id="nombreUsuario">[Nombre del usuario]</span>!
+				</h2>
+				<img src="img/CESA_noborder.png" alt="Logo" class="w-12 h-12 -ml-1">
+			</div>
 
-      <!-- Panel dinámico según rol -->
-      <div id="adminPanel" class="mb-8 hidden">
-        <h3 class="text-lg font-bold mb-2">Gestión de Becados</h3>
-        <div class="flex gap-2 mb-4">
-		  <button id="btnAgregar" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow flex items-center gap-2">
-			<img src="img/user.png" alt="Icono usuario" class="w-6 h-6">
-			Agregar
-		  </button>
-		  
-          <button id="btnModificar" class="bg-orange-400 text-white px-4 py-2 rounded hover:bg-orange-500 shadow flex items-center gap-2">
-			<img src="img/compose.png" alt="Huella" class="w-6 h-6">
-            Modificar
-          </button>
-          <button id="btnEliminar" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 shadow flex items-center gap-2">
-			<img src="img/bin.png" alt="Huella" class="w-6 h-6">
-            Eliminar
-          </button>
-        </div>
+			<!-- Panel dinámico según rol -->
+			<div id="adminPanel" class="mb-8">
+				<h3 class="text-lg font-bold mb-2">Panel de Administración</h3>
+				<div class="flex gap-2 mb-4">
+					<button id="btnBecados"
+						class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 shadow flex items-center gap-2">
+						<img src="img/user.png" alt="Icono usuario" class="w-6 h-6">
+						Becados
+					</button>
 
-        <!-- Filtro de búsqueda -->
-        <div class="mb-4">
-          <input type="text" id="buscador" placeholder="Filtrar becados..."
-                 class="w-full px-4 py-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
-        </div>
-      </div>
+					<button id="btnCafeterias"
+						class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 shadow flex items-center gap-2">
+						<img src="img/cafe.png" alt="Huella" class="w-6 h-6">
+						Cafeterías
+					</button>
+					<button id="btnCarreras"
+						class="bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 shadow flex items-center gap-2">
+						<img src="img/book.png" alt="Huella" class="w-6 h-6">
+						Carreras
+					</button>
+				</div>
+			</div>
 
-      <!-- Tabla de becados -->
-<div class="bg-white bg-opacity-90 shadow-md rounded overflow-hidden">
-  <table class="w-full text-left text-sm">
-    
-    <table id="tablaBecados">
-		<thead class="bg-blue-600 text-white">
-			<tr>
-			  <th class="px-0 py-2 hidden checkbox-col">Eliminar</th>
-			  <th class="px-0 py-2 w-10">#</th>
-			  <th class="px-0 py-2">Nombre</th>
-			  <th class="px-0 py-2">Apellido</br>Paterno</th>
-			  <th class="px-0 py-2">Apellido</br>Materno</th>
-			  <th class="px-0 py-2">No. Control</th>
-			  <th class="px-0 py-2">Carrera</th>
-			  <th class="px-0 py-2">Semestre</th>
-			  <th class="px-0 py-2">Correo</th>
-			  <th class="px-0 py-2">Tel.</th>
-			  <th class="px-0 py-2">Cafe.</th>
-			  <!-- Columnas de asistencia -->
-			  <th class="px-0 py-2">L</th>
-			  <th class="px-0 py-2">M</th>
-			  <th class="px-0 py-2">X</th>
-			  <th class="px-0 py-2">J</th>
-			  <th class="px-0 py-2">V</th>
-			  <!-- Estatus de la beca al final -->
-			  <th class="px-0 py-2">Estatus Beca</th>
-			</tr>
-		  </thead>
-      <tbody id="cuerpoTablaBecados">
-        <!-- Aquí se llenarán los datos -->
-      </tbody>
-    </table>
-  </table>
-</div>
-    
-    <!-- Modal único y fuera de la tabla -->
-    <div id="modalConfirmacion" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
-      <div class="bg-white rounded-lg p-6 shadow-xl">
-        <h2 class="text-lg font-semibold mb-4">Confirmar cambios</h2>
-        <p class="mb-6">¿Deseas guardar los cambios realizados?</p>
-        <div class="flex justify-end gap-3">
-          <button id="btnCancelar" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Cancelar</button>
-          <button id="btnConfirmar" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Confirmar</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </main>
+			<!-- Filtro de búsqueda -->
+			<div class="flex items-center mb-4">
+				<input type="week" class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="filtroSemana">
+				<input type="text" id="buscador" placeholder="Filtrar becados..."
+					class="w-full px-4 py-2 rounded border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500">
+			</div>
 
-  <script>
-  const usuario = {
-    nombre: localStorage.getItem("usuarioNombre"),
-    rol: localStorage.getItem("usuarioRol")
-  };
+			<!-- Tabla de becados -->
+			<div class="bg-white bg-opacity-90 shadow-md rounded overflow-hidden">
+				<table id="tablaBecados" class="w-full text-left text-sm">
+					<thead id="encabezadoTablaBecados" class="bg-blue-600 text-white"></thead>
+					<tbody id="cuerpoTablaBecados"></tbody>
+				</table>
+			</div>
+		</div>
+	</main>
 
-  console.log(usuario.rol);
+	<script>
+		const usuario = {
+			nombre: localStorage.getItem("usuarioNombre"),
+			rol: localStorage.getItem("usuarioRol")
+		};
 
-  document.querySelector('h2').innerText = `¡Bienvenido, ${usuario.nombre}!`;
-  if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
-    document.getElementById('adminPanel').classList.remove('hidden');
-  }
-  if (usuario.rol === "Admin") {
-    document.getElementById('adminOption').classList.remove('hidden');
-    document.getElementById('registrosCambiosOption').classList.remove('hidden');
-  }
-  const buscador = document.getElementById('buscador');
-  if (buscador) {
-    buscador.addEventListener('input', () => {
-      const valor = buscador.value.toLowerCase();
-      const filas = document.querySelectorAll('#tablaUsuarios tr');
-      filas.forEach(fila => {
-        const texto = fila.textContent.toLowerCase();
-        fila.style.display = texto.includes(valor) ? '' : 'none';
-      });
-    });
-  }
+		document.querySelector('h2').innerText = `¡Bienvenido, ${usuario.nombre}!`;
 
-  let editMode = false;
-  let originalValues = {};
+		const buscador = document.getElementById('buscador');
+		if (buscador) {
+			buscador.addEventListener('input', () => {
+				const valor = buscador.value.toLowerCase();
+				const filas = document.querySelectorAll('#tablaUsuarios tr');
+				filas.forEach(fila => {
+					const texto = fila.textContent.toLowerCase();
+					fila.style.display = texto.includes(valor) ? '' : 'none';
+				});
+			});
+		}
 
-  document.getElementById('btnModificar').addEventListener('click', () => {
-  const filas = document.querySelectorAll('.editable-row .editable');
+		let editMode = false;
+		let originalValues = {};
 
-  if (editMode) {
-    // Si ya está en modo edición, cancelar y restaurar los valores
-    filas.forEach((cell, i) => {
-      const key = cell.getAttribute('data-key');
-      cell.innerHTML = originalValues[key + i];
-    });
-    editMode = false;
-    return;
-  }
+		// Menú contextual
+		document.getElementById("menuToggle").addEventListener("click", () => {
+			document.getElementById("menuDropdown").classList.toggle("hidden");
+		});
 
-  // Activar modo edición
-  editMode = true;
-  originalValues = {}; // Limpiar valores previos
+		function cerrarSesion() {
+			{
+				localStorage.removeItem("usuarioNombre");
+				localStorage.removeItem("usuarioRol");
+				window.location.href = "index.html";
+			}
+		};
 
-  filas.forEach((cell, i) => {
-    const key = cell.getAttribute('data-key');
-    const original = cell.textContent;
-    originalValues[key + i] = original;
+		// Cerrar el menú contextual si se hace clic fuera de él
+		document.addEventListener("click", function (event) {
+			const menu = document.getElementById("menuDropdown");
+			const toggle = document.getElementById("menuToggle");
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = original;
-    input.className = 'w-full px-2 py-1 rounded border';
-    input.setAttribute('data-key', key);
+			// Si el clic no fue dentro del menú ni del botón
+			if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+				menu.classList.add("hidden");
+			}
+		});
 
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        document.getElementById('modalConfirmacion').classList.remove('hidden');
-      }
-    });
+		// === CARGAR BECADOS DINÁMICAMENTE DESDE PHP ===
+		fetch('php/asistencias.php', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: `anio=2025&semana=14`
+		})
+		.then(response => response.json())
+		.then(data => {
+			const encabezado = document.getElementById('encabezadoTablaBecados');
+			const tbody = document.getElementById('cuerpoTablaBecados');
+			tbody.innerHTML = "";
+			encabezado.innerHTML = "";
 
-    cell.innerHTML = '';
-    cell.appendChild(input);
-  });
-});
+			if (data.length === 0) return;
 
-  const modal = document.getElementById('modalConfirmacion');
+			// Filtrar solo días de lunes a viernes
+			const diasValidos = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+			const dias = Object.keys(data[0].asistencias)
+				.filter(dia => diasValidos.includes(dia.substring(0, 3)));
 
-  document.getElementById('btnCancelar').addEventListener('click', () => {
-    // Restaurar los valores originales
-    document.querySelectorAll('.editable-row .editable').forEach((cell, i) => {
-      const key = cell.getAttribute('data-key');
-      cell.innerHTML = originalValues[key + i];
-    });
-    editMode = false;
-    modal.classList.add('hidden');
-  });
+			// Crear encabezado
+			const ths = [
+				"<th class='px-2 py-2'>#</th>",
+				"<th class='px-2 py-2'>Nombre</th>",
+				"<th class='px-2 py-2'>Apellido Paterno</th>",
+				"<th class='px-2 py-2'>Apellido Materno</th>",
+				"<th class='px-2 py-2'>No. Control</th>",
+				"<th class='px-2 py-2'>Carrera</th>"
+			];
 
-  document.getElementById('btnConfirmar').addEventListener('click', () => {
-    const nuevosDatos = {};
-    document.querySelectorAll('.editable-row .editable input').forEach(input => {
-      const key = input.getAttribute('data-key');
-      const value = input.value;
-      nuevosDatos[key] = value;
-      input.parentElement.innerHTML = value;
-    });
+			dias.forEach(dia => {
+				ths.push(`<th class='px-2 py-2 text-center'>${dia}</th>`);
+			});
 
-    // Aquí irá la lógica para guardar los cambios
-    console.log('Datos actualizados:', nuevosDatos);
+			ths.push("<th class='px-2 py-2'>Estatus Beca</th>"); // <-- mover al final
 
-    modal.classList.add('hidden');
-    editMode = false;
-  });
+			encabezado.innerHTML = `<tr>${ths.join("")}</tr>`;
 
-  // Menú contextual
-  document.getElementById("menuToggle").addEventListener("click", () => {
-    document.getElementById("menuDropdown").classList.toggle("hidden");
-  });
+			// Crear filas
+			data.forEach((becado, index) => {
+				const tr = document.createElement('tr');
+				let tds = [
+					`<td class='px-2 py-2'>${index + 1}</td>`,
+					`<td class='px-2 py-2'>${becado.Nombre}</td>`,
+					`<td class='px-2 py-2'>${becado.Apellido_paterno}</td>`,
+					`<td class='px-2 py-2'>${becado.Apellido_materno}</td>`,
+					`<td class='px-2 py-2'>${becado.No_Control}</td>`,
+					`<td class='px-2 py-2'>${becado.Carrera}</td>`
+				];
 
-  function cerrarSesion() { {
-	localStorage.removeItem("usuarioNombre");
-	localStorage.removeItem("usuarioRol");
-  	window.location.href = "index.html";
-} };
+				dias.forEach(dia => {
+					const asistencia = becado.asistencias[dia] == 1 ? '✔️' : '-';
+					tds.push(`<td class='px-2 py-2 text-center'>${asistencia}</td>`);
+				});
 
-  // Cerrar el menú contextual si se hace clic fuera de él
-document.addEventListener("click", function (event) {
-  const menu = document.getElementById("menuDropdown");
-  const toggle = document.getElementById("menuToggle");
+				// Agregar el select al final
+				tds.push(`
+					<td class="px-2 py-2">
+						<select class="rounded px-2 py-1 border border-gray-300">
+							<option value="1" ${becado.estatus_beca == 1 ? 'selected' : ''}>🟢 Activo</option>
+							<option value="0" ${becado.estatus_beca == 0 ? 'selected' : ''}>🔴 Suspendido</option>
+						</select>
+					</td>
+				`);
 
-  // Si el clic no fue dentro del menú ni del botón
-  if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-    menu.classList.add("hidden");
-  }
-});
-
- // === ELIMINAR BECADO con modal reutilizado ===
-let eliminarModo = false;
-
-document.getElementById('btnEliminar').addEventListener('click', () => {
-  eliminarModo = !eliminarModo;
-
-  // Mostrar u ocultar columna de checkboxes
-  document.querySelectorAll('.checkbox-col').forEach(col => {
-    col.classList.toggle('hidden');
-  });
-
-  // Limpiar checkboxes
-  document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
-
-  if (eliminarModo) {
-    // Escuchar Enter
-    document.addEventListener('keydown', detectarEnterEliminar);
-  } else {
-    document.removeEventListener('keydown', detectarEnterEliminar);
-  }
-});
-
-function detectarEnterEliminar(e) {
-  if (e.key === 'Enter') {
-    const seleccionados = document.querySelectorAll('.checkbox-becado:checked');
-    if (seleccionados.length > 0) {
-      // Personaliza el texto del modal para eliminación
-      document.querySelector('#modalConfirmacion h2').innerText = 'Eliminar becado(s)';
-      document.querySelector('#modalConfirmacion p').innerText =
-        `¿Estás seguro de eliminar ${seleccionados.length} becado(s)? Esta acción no se puede deshacer.`;
-
-      document.getElementById('modalConfirmacion').classList.remove('hidden');
-
-      // Cancelar eliminación
-      document.getElementById('btnCancelar').onclick = () => {
-        document.getElementById('modalConfirmacion').classList.add('hidden');
-        eliminarModo = false;
-        document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
-        document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
-        document.removeEventListener('keydown', detectarEnterEliminar);
-      };
-
-      // Confirmar eliminación
-      document.getElementById('btnConfirmar').onclick = () => {
-        seleccionados.forEach(c => c.closest('tr').remove());
-        document.getElementById('modalConfirmacion').classList.add('hidden');
-        eliminarModo = false;
-        document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
-        document.removeEventListener('keydown', detectarEnterEliminar);
-      };
-    } else {
-      alert('Selecciona al menos un becado para eliminar.');
-    }
-  }
-}
-
-  document.getElementById("btnAgregar").addEventListener("click", function () {
-    window.location.href = "RegistroBecado.html";
-  });
+				tr.innerHTML = tds.join("");
+				tbody.appendChild(tr);
+			});
+		})
+		.catch(error => {
+			console.error("Error al obtener asistencias:", error);
+		});
 
 
-  // === CARGAR BECADOS DINÁMICAMENTE DESDE PHP ===
-fetch('php/listar_becados.php')
-  .then(response => response.json())
-  .then(data => {
-	const tbody = document.getElementById('cuerpoTablaBecados');
-    tbody.innerHTML = ""; // Limpiar antes de llenar
-
-    data.forEach((becado, index) => {
-      	const tr = document.createElement('tr');
-      	tr.classList.add('editable-row');
-		
-		tr.innerHTML = `
-        <td class="px-2 py-2 hidden checkbox-col">
-          <input type="checkbox" class="checkbox-becado" />
-        </td>
-        <td class="px-4 py-2">${index + 1}</td>
-        <td class="px-4 py-2 editable" data-key="nombre">${becado.Nombre}</td>
-        <td class="px-4 py-2 editable" data-key="apellidoPaterno">${becado.Apellido_paterno}</td>
-        <td class="px-4 py-2 editable" data-key="apellidoMaterno">${becado.Apellido_materno}</td>
-        <td class="px-4 py-2 editable" data-key="noControl">${becado.No_Control}</td>
-        <td class="px-4 py-2 editable" data-key="carrera">${becado.Carrera}</td>
-        <td class="px-4 py-2 editable" data-key="semestre">${becado.Semestre}</td>
-        <td class="px-3 py-2 editable" data-key="correo">${becado.Correo}</td>
-        <td class="px-3 py-2 editable" data-key="telefono">${becado.Telefono}</td>
-        <td class="px-2 py-2">A</td> <!-- Por ahora se muestra A, puedes reemplazarlo más adelante -->
-        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-2 py-2 text-green-600 font-bold">✔</td>
-        <td class="px-2 py-2">
-          <select class="rounded px-2 py-1 border border-gray-300">
-            <option value="1" ${becado.estatus_beca ? 'selected' : ''}>Activo</option>
-            <option value="0" ${!becado.estatus_beca ? 'selected' : ''}>Suspendido</option>
-          </select>
-        </td>
-      `;
-
-      tbody.appendChild(tr);
-	  
-      	
-    });
-  })
-  .catch(error => {
-    console.error("Error al cargar becados:", error);
-  });
-  </script>
-
-<!-- JS de becados.js -->
-<!--script src="js/becados.js"></script-->
+	</script>
 </body>
+
 </html>

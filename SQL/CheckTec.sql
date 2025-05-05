@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `checktec`.`alumno` (
   `Nombre` VARCHAR(20) NOT NULL,
   `Apellido_paterno` VARCHAR(20) NOT NULL,
   `Apellido_materno` VARCHAR(20) NOT NULL,
-  `No_Control` INT(11) NOT NULL,
-  `Carrera` ENUM('Sistemas', 'Mecatrónica', 'Mecánica', 'Civil', 'Alimentarias', 'Electrónica', 'Industrial', 'Administración', 'Agricola') NOT NULL,
-  `Semestre` ENUM('Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto', 'Séptimo', 'Octavo', 'Noveno', 'Décimo') NOT NULL,
+  `No_control` INT(11) NOT NULL,
+  `id_Carrera` INT(11) NOT NULL,
+  `Semestre` INT(11) NOT NULL,
   `id_Cafeteria` INT(11) NOT NULL,
   `Correo` VARCHAR(45) NULL DEFAULT NULL,
   `Telefono` VARCHAR(15) NULL DEFAULT NULL,
@@ -46,6 +46,12 @@ CREATE TABLE IF NOT EXISTS `checktec`.`alumno` (
   CONSTRAINT `fk_Alumno_Cafeteria1`
     FOREIGN KEY (`id_Cafeteria`)
     REFERENCES `checktec`.`cafeteria` (`id_Cafeteria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  INDEX `fk_Alumno_Carrera1_idx` (`id_Carrera` ASC),
+  CONSTRAINT `fk_Alumno_Carrera1`
+    FOREIGN KEY (`id_Carrera`)
+    REFERENCES `checktec`.`carrera` (`id_Carrera`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -65,6 +71,31 @@ CREATE TABLE IF NOT EXISTS `checktec`.`cafeteria` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUES ('1', 'A', '30');
+INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUES ('2', 'D', '30');
+INSERT INTO `checktec`.`cafeteria` (`id_Cafeteria`, `Nombre`, `Capacidad`) VALUES ('3', 'F', '30');
+
+-- -----------------------------------------------------
+-- Table `checktec`.`carrera`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `checktec`.`carrera` ;
+
+CREATE TABLE IF NOT EXISTS `checktec`.`carrera` (
+  `id_Carrera` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id_Carrera`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+INSERT INTO carrera VALUES(null, 'Ingeniería en Sistemas Computacionales');
+INSERT INTO carrera VALUES(null, 'Ingeniería Mecatrónica');
+INSERT INTO carrera VALUES(null, 'Ingeniería Mecánica');
+INSERT INTO carrera VALUES(null, 'Ingeniería Civil');
+INSERT INTO carrera VALUES(null, 'Ingeniería en Industrias Alimentarias');
+INSERT INTO carrera VALUES(null, 'Ingeniería Electrónica');
+INSERT INTO carrera VALUES(null, 'Ingeniería Industrial');
+INSERT INTO carrera VALUES(null, 'Ingeniería en Administración');
+INSERT INTO carrera VALUES(null, 'Ingeniería en Innovación Agrícola Sustentable');
 
 -- -----------------------------------------------------
 -- Table `checktec`.`asistencia`
@@ -75,18 +106,11 @@ CREATE TABLE IF NOT EXISTS `checktec`.`asistencia` (
   `id_Asistencia` INT(11) NOT NULL AUTO_INCREMENT,
   `Fecha_asistencia` DATETIME NOT NULL,
   `id_Alumno` INT(11) NOT NULL,
-  `id_Cafeteria` INT(11) NOT NULL,
-  PRIMARY KEY (`id_Asistencia`, `id_Alumno`, `id_Cafeteria`),
+  PRIMARY KEY (`id_Asistencia`),
   INDEX `fk_Asistencia_Alumno_idx` (`id_Alumno` ASC),
-  INDEX `fk_Asistencia_Cafeteria1_idx` (`id_Cafeteria` ASC),
   CONSTRAINT `fk_Asistencia_Alumno`
     FOREIGN KEY (`id_Alumno`)
     REFERENCES `checktec`.`alumno` (`id_Alumno`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Asistencia_Cafeteria1`
-    FOREIGN KEY (`id_Cafeteria`)
-    REFERENCES `checktec`.`cafeteria` (`id_Cafeteria`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
