@@ -1,275 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Administrar Usuarios | CheckTec</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Administrar Usuarios | CheckTec</title>
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen bg-gradient-to-r from-blue-600 to-purple-500 flex flex-col items-center justify-start py-10 px-4">
 
-  <!-- Encabezado -->
-  <div class="flex items-center gap-2 mb-6">
-    <img src="img/huellaD.png" alt="Logo" class="w-10 h-10">
-    <h1 class="text-2xl font-bold text-white -ml-3">heckTec |</h1>
-    <span class="text-2xl font-bold text-white"> Administrar Usuarios </span>
-  </div>
+	<!-- Encabezado -->
+	<div class="flex items-center gap-2 mb-6">
+		<img src="img/huellaD.png" alt="Logo" class="w-10 h-10">
+		<h1 class="text-2xl font-bold text-white -ml-3">heckTec |</h1>
+		<span class="text-2xl font-bold text-white"> Administrar Usuarios </span>
+	</div>
 
-  <!-- Panel principal -->
-  <div class="bg-white/90 p-6 rounded-xl shadow-lg w-full max-w-6xl">
+	<!-- Panel principal -->
+	<div class="bg-white/90 p-6 rounded-xl shadow-lg w-full max-w-6xl">
+		<div class="flex justify-between mb-6">
+			<!-- Botones a la izquierda -->
+			<div class="flex gap-4">
+				<button id="btnAgregar"
+						class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow flex items-center gap-2">
+						<img src="img/user.png" alt="Icono usuario" class="w-6 h-6">
+						Agregar
+					</button>
 
-    <div class="flex justify-between mb-6">
-        <!-- Botones a la izquierda -->
-        <div class="flex gap-4">
-          <button id="btnAgregarUsuario" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow">Agregar usuario</button>
-          <button id="btnModificarUsuario" class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 transition">Modificar usuario</button>
-          <button id="btnEliminarUsuario" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">Eliminar usuario</button>
-        </div>
-      
-        <!-- Botón a la derecha -->
-        <button id="btnPanel" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition">Panel</button>
-      </div>
-      
+					<button id="btnModificar"
+						class="bg-orange-400 text-white px-4 py-2 rounded hover:bg-orange-500 shadow flex items-center gap-2">
+						<img src="img/compose.png" alt="Huella" class="w-6 h-6">
+						Modificar
+					</button>
+					<button id="btnEliminar"
+						class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 shadow flex items-center gap-2">
+						<img src="img/bin.png" alt="Huella" class="w-6 h-6">
+						Eliminar
+					</button>
+			</div>
 
-    <!-- Tabla de usuarios -->
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white text-sm text-left">
-        <thead class="bg-blue-600 text-white">
-          <tr>
-            <th class="px-4 py-2 hidden checkbox-col">Eliminar</th>
-            <th class="px-4 py-2">#</th>
-            <th class="px-4 py-2">Nombre</th>
-            <th class="px-4 py-2">Apellido Paterno</th>
-            <th class="px-4 py-2">Apellido Materno</th>
-            <th class="px-4 py-2">Usuario</th>
-            <th class="px-4 py-2">Correo</th>
-            <th class="px-4 py-2">Contraseña</th>
-            <th class="px-4 py-2">Rol</th>
-          </tr>
-        </thead>
-        <tbody id="tablaUsuarios">
-          <tr class="editable-row">
-            <td class="px-4 py-2 hidden checkbox-col">
-              <input type="checkbox" class="checkbox-usuario" />
-            </td>
-            <td class="px-4 py-2">1</td>
-            <td class="px-4 py-2 editable" data-key="nombre">Rubén</td>
-            <td class="px-4 py-2 editable" data-key="apellidoPaterno">Medina</td>
-            <td class="px-4 py-2 editable" data-key="apellidoMaterno">Perez</td>
-            <td class="px-4 py-2 editable" data-key="usuario">Ruben724</td>
-            <td class="px-4 py-2 editable" data-key="correo">admin@checktec.com</td>
-            <td class="px-4 py-2 editable" data-key="contrasena">14384238</td>
-            <td class="px-4 py-2 editable" data-key="rol">Admin</td>
-          </tr>
-          <!-- Nuevos usuarios aparecerán aquí -->
-        </tbody>
-      </table>
-    </div>
-  </div>
+			<!-- Botón a la derecha -->
+			<button id="btnPanel"
+				class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Regresar</button>
+		</div>
 
-  <!-- Modal Agregar Usuario  -->
-  <div id="modalAgregarUsuario" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
-      <h2 class="text-xl font-bold mb-4">Agregar Usuario</h2>
-  
-      <form id="formNuevoUsuario" class="space-y-3">
-        <input type="text" placeholder="Nombre" class="w-full px-3 py-2 border rounded" required>
-        <input type="text" placeholder="Apellido Paterno" class="w-full px-3 py-2 border rounded" required>
-        <input type="text" placeholder="Apellido Materno" class="w-full px-3 py-2 border rounded" required>
-        <input type="text" placeholder="Usuario" class="w-full px-3 py-2 border rounded" required>
-        <input type="password" placeholder="Contraseña" class="w-full px-3 py-2 border rounded" required>
-  
-        <select class="w-full px-3 py-2 border rounded" required>
-          <option value="Miembro_CESA" selected>Miembro_CESA</option>
-          <option value="Admin">Admin</option>
-        </select>
-  
-        <div class="flex justify-end gap-2 mt-4">
-          <button type="button" id="cancelarModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-            Cancelar
-          </button>
-          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-            Guardar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
 
-  <!-- Modal Confirmación (para modificar y eliminar) -->
-  <div id="modalConfirmacion" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
-    <div class="bg-white rounded-lg p-6 shadow-xl">
-      <h2 class="text-lg font-semibold mb-4">Confirmar cambios</h2>
-      <p class="mb-6">¿Deseas guardar los cambios realizados?</p>
-      <div class="flex justify-end gap-3">
-        <button id="btnCancelar" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Cancelar</button>
-        <button id="btnConfirmar" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Confirmar</button>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    // Modal Agregar Usuario
-    document.getElementById("btnAgregarUsuario").addEventListener("click", () => {
-      document.getElementById("modalAgregarUsuario").classList.remove("hidden");
-    });
-  
-    document.getElementById("cancelarModal").addEventListener("click", () => {
-      document.getElementById("modalAgregarUsuario").classList.add("hidden");
-    });
-  
-    document.getElementById("formNuevoUsuario").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Usuario agregado correctamente (simulado)");
-      document.getElementById("modalAgregarUsuario").classList.add("hidden");
-    });
-  
-    // Variables de modo edición y eliminación
-    let editMode = false;
-    let deletionMode = false;
-    let originalValues = {};
+		<!-- Tabla de usuarios -->
+		<div class="overflow-x-auto">
+			<table class="min-w-full bg-white text-sm text-left">
+				<thead class="bg-blue-600 text-white">
+					<tr>
+						<th class="px-4 py-2 hidden checkbox-col">Eliminar</th>
+						<th class="px-4 py-2">#</th>
+						<th class="px-4 py-2">Nombre</th>
+						<th class="px-4 py-2">Apellido Paterno</th>
+						<th class="px-4 py-2">Apellido Materno</th>
+						<th class="px-4 py-2">Usuario</th>
+						<th class="px-4 py-2">Correo</th>
+						<th class="px-4 py-2">Contraseña</th>
+						<th class="px-4 py-2">Rol</th>
+					</tr>
+				</thead>
+				<tbody id="tablaUsuarios">
+					<tr class="editable-row">
+						<td class="px-4 py-2 hidden checkbox-col">
+							<input type="checkbox" class="checkbox-usuario" />
+						</td>
+						<td class="px-4 py-2">1</td>
+						<td class="px-4 py-2 editable" data-key="nombre">Rubén</td>
+						<td class="px-4 py-2 editable" data-key="apellidoPaterno">Medina</td>
+						<td class="px-4 py-2 editable" data-key="apellidoMaterno">Perez</td>
+						<td class="px-4 py-2 editable" data-key="usuario">Ruben724</td>
+						<td class="px-4 py-2 editable" data-key="correo">admin@checktec.com</td>
+						<td class="px-4 py-2 editable" data-key="contrasena">14384238</td>
+						<td class="px-4 py-2 editable" data-key="rol">Admin</td>
+					</tr>
+					<!-- Nuevos usuarios aparecerán aquí -->
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-    // Función para modificar usuario
-    document.getElementById('btnModificarUsuario').addEventListener('click', () => {
-      const filas = document.querySelectorAll('.editable-row .editable');
-  
-      if (editMode) {
-        // Si ya está en modo edición, cancelar y restaurar los valores originales
-        filas.forEach((cell, i) => {
-          const key = cell.getAttribute('data-key');
-          cell.innerHTML = originalValues[key + i];
-        });
-        editMode = false;
-        return;
-      }
-  
-      // Activar modo edición
-      editMode = true;
-      originalValues = {};
-  
-      filas.forEach((cell, i) => {
-        const key = cell.getAttribute('data-key');
-        const original = cell.textContent;
-        originalValues[key + i] = original;
-  
-        // Para el campo "rol" se crea un select con las opciones
-        if(key === 'rol'){
-          const select = document.createElement('select');
-          select.className = 'w-full px-2 py-1 rounded border';
-          const optionAdmin = document.createElement('option');
-          optionAdmin.value = 'Admin';
-          optionAdmin.text = 'Admin';
-          const optionMiembro = document.createElement('option');
-          optionMiembro.value = 'Miembro CESA';
-          optionMiembro.text = 'Miembro CESA';
-          select.appendChild(optionAdmin);
-          select.appendChild(optionMiembro);
-          select.value = original;
-          select.setAttribute('data-key', key);
-  
-          select.addEventListener('keydown', e => {
-            if(e.key === 'Enter'){
-              document.getElementById('modalConfirmacion').classList.remove('hidden');
-              document.querySelector('#modalConfirmacion h2').innerText = 'Confirmar cambios';
-              document.querySelector('#modalConfirmacion p').innerText = '¿Deseas guardar los cambios realizados?';
-            }
-          });
-          cell.innerHTML = '';
-          cell.appendChild(select);
-        } else {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = original;
-          input.className = 'w-full px-2 py-1 rounded border';
-          input.setAttribute('data-key', key);
-  
-          input.addEventListener('keydown', e => {
-            if(e.key === 'Enter'){
-              document.getElementById('modalConfirmacion').classList.remove('hidden');
-              document.querySelector('#modalConfirmacion h2').innerText = 'Confirmar cambios';
-              document.querySelector('#modalConfirmacion p').innerText = '¿Deseas guardar los cambios realizados?';
-            }
-          });
-          cell.innerHTML = '';
-          cell.appendChild(input);
-        }
-      });
-    });
-  
-    // Confirmación y cancelación del modal
-    document.getElementById('btnCancelar').addEventListener('click', () => {
-      if(editMode){
-        // Restaurar valores originales en modo edición
-        document.querySelectorAll('.editable-row .editable').forEach((cell, i) => {
-          const key = cell.getAttribute('data-key');
-          cell.innerHTML = originalValues[key + i];
-        });
-        editMode = false;
-      }
-      document.getElementById('modalConfirmacion').classList.add('hidden');
-    });
-  
-    document.getElementById('btnConfirmar').addEventListener('click', () => {
-      if(editMode){
-        // Guardar cambios de la edición
-        const nuevosDatos = {};
-        document.querySelectorAll('.editable-row .editable').forEach((cell, i) => {
-          const key = cell.getAttribute('data-key');
-          let value;
-          const input = cell.querySelector('input, select');
-          if(input){
-            value = input.value;
-            cell.innerHTML = value;
-          } else {
-            value = cell.textContent;
-          }
-          nuevosDatos[key] = value;
-        });
-        console.log('Datos actualizados:', nuevosDatos);
-        editMode = false;
-      } else if(deletionMode){
-        // Confirmar eliminación de usuarios seleccionados
-        const seleccionados = document.querySelectorAll('.checkbox-usuario:checked');
-        seleccionados.forEach(c => c.closest('tr').remove());
-        deletionMode = false;
-        document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
-        document.removeEventListener('keydown', detectarEnterEliminar);
-      }
-      document.getElementById('modalConfirmacion').classList.add('hidden');
-    });
-  
-    // Función para el modo de eliminación
-    document.getElementById('btnEliminarUsuario').addEventListener('click', () => {
-      deletionMode = !deletionMode;
-      document.querySelectorAll('.checkbox-col').forEach(col => {
-        col.classList.toggle('hidden');
-      });
-      // Limpiar selección de checkboxes
-      document.querySelectorAll('.checkbox-usuario').forEach(cb => cb.checked = false);
-  
-      if(deletionMode){
-        document.addEventListener('keydown', detectarEnterEliminar);
-      } else {
-        document.removeEventListener('keydown', detectarEnterEliminar);
-      }
-    });
-  
-    function detectarEnterEliminar(e) {
-      if(e.key === 'Enter'){
-        const seleccionados = document.querySelectorAll('.checkbox-usuario:checked');
-        if(seleccionados.length > 0){
-          document.querySelector('#modalConfirmacion h2').innerText = 'Eliminar usuario(s)';
-          document.querySelector('#modalConfirmacion p').innerText = `¿Estás seguro de eliminar ${seleccionados.length} usuario(s)? Esta acción no se puede deshacer.`;
-          document.getElementById('modalConfirmacion').classList.remove('hidden');
-        } else {
-          alert('Selecciona al menos un usuario para eliminar.');
-        }
-      }
-    }
+	<!-- Modal Agregar Usuario  -->
+	<div id="modalAgregarUsuario"
+		class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+		<div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+			<h2 class="text-xl font-bold mb-4">Agregar Usuario</h2>
 
-    document.getElementById("btnPanel").addEventListener("click", function () {
-    window.location.href = "dashboard.html";
-  });
-  </script>
+			<form id="formNuevoUsuario" class="space-y-3">
+				<input type="text" placeholder="Nombre" class="w-full px-3 py-2 border rounded" required>
+				<input type="text" placeholder="Apellido Paterno" class="w-full px-3 py-2 border rounded" required>
+				<input type="text" placeholder="Apellido Materno" class="w-full px-3 py-2 border rounded" required>
+				<input type="text" placeholder="Usuario" class="w-full px-3 py-2 border rounded" required>
+				<input type="password" placeholder="Contraseña" class="w-full px-3 py-2 border rounded" required>
+
+				<select class="w-full px-3 py-2 border rounded" required>
+					<option value="Miembro_CESA" selected>Miembro_CESA</option>
+					<option value="Admin">Admin</option>
+				</select>
+
+				<div class="flex justify-end gap-2 mt-4">
+					<button type="button" id="cancelarModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+						Cancelar
+					</button>
+					<button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+						Guardar
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Modal Confirmación (para modificar y eliminar) -->
+	<div id="modalConfirmacion"
+		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+		<div class="bg-white rounded-lg p-6 shadow-xl">
+			<h2 class="text-lg font-semibold mb-4">Confirmar cambios</h2>
+			<p class="mb-6">¿Deseas guardar los cambios realizados?</p>
+			<div class="flex justify-end gap-3">
+				<button id="btnCancelar" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Cancelar</button>
+				<button id="btnConfirmar"
+					class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Confirmar</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/usuarios.js"></script>
 </body>
+
 </html>
