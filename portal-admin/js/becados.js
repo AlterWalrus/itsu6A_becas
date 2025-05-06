@@ -1,3 +1,8 @@
+//Regresar
+document.getElementById("btnPanel").addEventListener("click", function () {
+	window.location.href = "dashboard.html";
+});
+
 //CONCEDER PERMISOS SEGUN ROL
 const usuario = {
 	nombre: localStorage.getItem("usuarioNombre"),
@@ -149,13 +154,13 @@ function detectarEnterEliminar(e) {
 //MODAL PA AGREGAR WNS
 document.getElementById('btnAgregar').addEventListener('click', () => {
 	document.getElementById('agregarBecado').classList.remove('hidden');
-  document.body.classList.add('modal-open');
+	document.body.classList.add('modal-open');
 });
 
 document.getElementById('cancelarModal').addEventListener('click', () => {
 	document.getElementById('agregarBecado').classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  resetearCampos();
+	document.body.classList.remove('modal-open');
+	resetearCampos();
 });
 
 document.getElementById("btnCapturarHuella").addEventListener("click", () => {
@@ -163,7 +168,7 @@ document.getElementById("btnCapturarHuella").addEventListener("click", () => {
 });
 
 document.getElementById("formBecado").addEventListener("submit", function (e) {
-	e.preventDefault();	
+	e.preventDefault();
 	var nom = document.getElementById("Nombre").value;
 	var app = document.getElementById("ApellidoP").value;
 	var apm = document.getElementById("ApellidoM").value;
@@ -181,16 +186,6 @@ document.getElementById("formBecado").addEventListener("submit", function (e) {
 		alert("Por favor, llenar todos los campos.");
 		return;
 	}
-
-	console.log(nom);
-	console.log(app);
-	console.log(apm);
-	console.log(tel);
-	console.log(nct);
-	console.log(eml);
-	console.log(crr);
-	console.log(sem);
-	console.log(caf);
 
 	fetch("php/registro_becado.php", {
 		method: "POST",
@@ -217,6 +212,7 @@ document.getElementById("formBecado").addEventListener("submit", function (e) {
 					document.getElementById("exitoBox").classList.add("hidden");
 					document.body.classList.remove('modal-open');
 					resetearCampos();
+					cargarBecados();
 				});
 			} else {
 				alert("Hubo un error al registrar: " + (data.error || "desconocido"));
@@ -233,7 +229,7 @@ document.getElementById("cancelarModal").addEventListener("click", () => {
 	}
 });
 
-function resetearCampos(){
+function resetearCampos() {
 	document.getElementById("Nombre").value = '';
 	document.getElementById("ApellidoP").value = '';
 	document.getElementById("ApellidoM").value = '';
@@ -246,43 +242,60 @@ function resetearCampos(){
 }
 
 //CARGAR WNS
-fetch('php/listar_becados.php')
-	.then(response => response.json())
-	.then(data => {
-		const tbody = document.getElementById('cuerpoTablaBecados');
-		tbody.innerHTML = ""; // Limpiar antes de llenar
+async function cargarBecados() {
+	try {
+		const resCafes = await fetch('php/cargar_cafeterias.php');
+		const datosCafes = await resCafes.json();
+		const cafeterias = {};
+		datosCafes.forEach(cafe => {
+			cafeterias[cafe.id_Cafeteria] = cafe.Nombre;
+		});
 
-		data.forEach((becado, index) => {
+		const resCarreras = await fetch('php/cargar_carreras.php');
+		const datosCarreras = await resCarreras.json();
+		const carreras = {};
+		datosCarreras.forEach(carrera => {
+			carreras[carrera.id_Carrera] = carrera.Nombre;
+		});
+
+		const resBecados = await fetch('php/cargar_becados.php');
+		const becados = await resBecados.json();
+
+		const tbody = document.getElementById('cuerpoTablaBecados');
+		tbody.innerHTML = "";
+
+		becados.forEach((becado, index) => {
 			const tr = document.createElement('tr');
 			tr.classList.add('editable-row');
 
 			tr.innerHTML = `
-	<td class="px-2 py-2 hidden checkbox-col">
-	  <input type="checkbox" class="checkbox-becado" />
-	</td>
-	<td class="px-2 py-2">${index + 1}</td>
-	<td class="px-2 py-2 editable" data-key="nombre">${becado.Nombre}</td>
-	<td class="px-2 py-2 editable" data-key="apellidoPaterno">${becado.Apellido_paterno}</td>
-	<td class="px-2 py-2 editable" data-key="apellidoMaterno">${becado.Apellido_materno}</td>
-	<td class="px-2 py-2 editable" data-key="noControl">${becado.No_Control}</td>
-	<td class="px-2 py-2 editable" data-key="carrera">${becado.Carrera}</td>
-	<td class="px-2 py-2 editable" data-key="semestre">${becado.Semestre}</td>
-	<td class="px-2 py-2 editable" data-key="correo">${becado.Correo}</td>
-	<td class="px-2 py-2 editable" data-key="telefono">${becado.Telefono}</td>
-	<td class="px-2 py-2">${becado.Cafeteria}</td>
-	<td class="px-2 py-2">
-	  <select class="rounded px-2 py-1 border border-gray-300">
-		<option value="1" ${becado.estatus_beca == 1 ? 'selected' : ''}>✔️ Activo</option>
-		<option value="0" ${becado.estatus_beca == 0 ? 'selected' : ''}>❌ Suspendido</option>
-	  </select>
-	</td>
-  `;
+				<td class="px-2 py-2 hidden checkbox-col">
+					<input type="checkbox" class="checkbox-becado" />
+				</td>
+				<td class="px-2 py-2">${index + 1}</td>
+				<td class="px-2 py-2 editable" data-key="nombre">${becado.Nombre}</td>
+				<td class="px-2 py-2 editable" data-key="apellidoPaterno">${becado.Apellido_paterno}</td>
+				<td class="px-2 py-2 editable" data-key="apellidoMaterno">${becado.Apellido_materno}</td>
+				<td class="px-2 py-2 editable" data-key="noControl">${becado.No_control}</td>
+				<td class="px-2 py-2 editable" data-key="carrera">${carreras[becado.id_Carrera]}</td>
+				<td class="px-2 py-2 editable" data-key="semestre">${becado.Semestre}</td>
+				<td class="px-2 py-2 editable" data-key="correo">${becado.Correo}</td>
+				<td class="px-2 py-2 editable" data-key="telefono">${becado.Telefono}</td>
+				<td class="px-2 py-2">${cafeterias[becado.id_Cafeteria]}</td>
+				<td class="px-2 py-2">
+					<select class="rounded px-2 py-1 border border-gray-300">
+						<option value="1" ${becado.estatus_beca == 1 ? 'selected' : ''}>✔️ Activo</option>
+						<option value="0" ${becado.estatus_beca == 0 ? 'selected' : ''}>❌ Suspendido</option>
+					</select>
+				</td>
+			`;
 			tbody.appendChild(tr);
 		});
-	})
-	.catch(error => {
-		console.error("Error al cargar becados:", error);
-	});
-document.getElementById("btnPanel").addEventListener("click", function () {
-	window.location.href = "dashboard.html";
+	} catch (error) {
+		console.error("Error al cargar datos:", error);
+	}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+	cargarBecados();
 });
