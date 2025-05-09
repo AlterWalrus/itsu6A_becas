@@ -141,3 +141,7 @@ document.addEventListener("click", function (event) {
 document.getElementById("btnBecados").addEventListener("click", function () {
 	window.location.href = "Becados.html";
 });
+
+document.getElementById("btnCarreras").addEventListener("click", function () {
+	window.location.href = "Carreras.html";
+});

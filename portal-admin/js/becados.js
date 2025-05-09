@@ -12,6 +12,7 @@ const usuario = {
 if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
 	document.getElementById('adminPanel').classList.remove('hidden');
 }
+
 /*
 const buscador = document.getElementById('buscador');
 if (buscador) {
@@ -153,14 +154,17 @@ function detectarEnterEliminar(e) {
 */
 //MODAL PA AGREGAR WNS
 document.getElementById('btnAgregar').addEventListener('click', () => {
+	//cargarOpciones();
 	document.getElementById('agregarBecado').classList.remove('hidden');
 	document.body.classList.add('modal-open');
 });
 
 document.getElementById('cancelarModal').addEventListener('click', () => {
-	document.getElementById('agregarBecado').classList.add('hidden');
-	document.body.classList.remove('modal-open');
-	resetearCampos();
+	if (confirm("¿Cancelar registro?")) {
+		document.getElementById('agregarBecado').classList.add('hidden');
+		document.body.classList.remove('modal-open');
+		resetearCampos();
+	}
 });
 
 document.getElementById("btnCapturarHuella").addEventListener("click", () => {
@@ -223,12 +227,6 @@ document.getElementById("formBecado").addEventListener("submit", function (e) {
 		});
 });
 
-document.getElementById("cancelarModal").addEventListener("click", () => {
-	if (confirm("¿Cancelar registro?")) {
-		document.getElementById("agregarBecado").classList.add("hidden");
-	}
-});
-
 function resetearCampos() {
 	document.getElementById("Nombre").value = '';
 	document.getElementById("ApellidoP").value = '';
@@ -248,6 +246,10 @@ async function cargarBecados() {
 		const datosCafes = await resCafes.json();
 		const cafeterias = {};
 		datosCafes.forEach(cafe => {
+			const option = document.createElement("option");
+			option.value = cafe.id_Cafeteria;
+			option.textContent = cafe.Nombre;
+			document.getElementById("Cafeteria").appendChild(option);
 			cafeterias[cafe.id_Cafeteria] = cafe.Nombre;
 		});
 
@@ -255,6 +257,10 @@ async function cargarBecados() {
 		const datosCarreras = await resCarreras.json();
 		const carreras = {};
 		datosCarreras.forEach(carrera => {
+			const option = document.createElement("option");
+			option.value = carrera.id_Carrera;
+			option.textContent = carrera.Nombre;
+			document.getElementById("Carrera").appendChild(option);
 			carreras[carrera.id_Carrera] = carrera.Nombre;
 		});
 
