@@ -1,3 +1,18 @@
+//Filtrar--------------------------
+document.getElementById('buscador').addEventListener('input', function () {
+	const filtro = this.value.toLowerCase();
+	const filas = document.querySelectorAll('#cuerpoTablaBecados tr');
+
+	filas.forEach(fila => {
+		const texto = fila.textContent.toLowerCase();
+		if (texto.includes(filtro)) {
+			fila.style.display = ''; // mostrar
+		} else {
+			fila.style.display = 'none'; // ocultar
+		}
+	});
+});
+
 function cargarAsistencias(anio, semana) {
 	fetch('php/asistencias.php', {
 		method: 'POST',

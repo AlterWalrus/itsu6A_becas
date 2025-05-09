@@ -115,32 +115,37 @@ document.getElementById('btnModificar').addEventListener('click', () => {
 		fila.querySelectorAll('.editable').forEach(celda => {
 			const key = celda.getAttribute('data-key');
 			const original = celda.textContent.trim();
-	
+
 			valoresOriginales[filaIndex][key] = original;
-	
+
 			const input = document.createElement('input');
 			input.type = 'text';
 			input.value = original;
 			input.className = 'w-full px-2 py-1 rounded border';
 			input.setAttribute('data-key', key);
-	
+
 			celda.innerHTML = '';
 			celda.appendChild(input);
 		});
 	});
-	
+
 });
 
 document.getElementById('btnEliminar').addEventListener('click', () => {
 	modo = 2;
 	document.getElementById('confirmPanel').classList.remove('hidden');
 	document.getElementById('adminPanel').classList.add('hidden');
+
+	document.querySelectorAll('.checkbox-col').forEach(col => {
+		col.classList.toggle('hidden');
+	});
+	document.querySelectorAll('.checkbox-carrera').forEach(c => (c.checked = false));
 });
 
 //Cancelar-------------------------
 document.getElementById('btnCancelar').addEventListener('click', () => {
 	//Edicion
-	if(modo === 1){
+	if (modo === 1) {
 		console.log("cancelar edicion");
 		document.querySelectorAll('.editable-row').forEach((fila, filaIndex) => {
 			const celdas = fila.querySelectorAll('.editable');
@@ -150,12 +155,14 @@ document.getElementById('btnCancelar').addEventListener('click', () => {
 				celda.innerHTML = original; // Restaurar el valor original
 			});
 		});
-		
-	}else
-	//Eliminacion
-	if(modo === 2){
-		console.log("cancelar eliminacion");
-	}
+
+	} else
+		//Eliminacion
+		if (modo === 2) {
+			console.log("cancelar eliminacion");
+			document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
+			document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
+		}
 	document.getElementById('confirmPanel').classList.add('hidden');
 	document.getElementById('adminPanel').classList.remove('hidden');
 });
@@ -163,68 +170,99 @@ document.getElementById('btnCancelar').addEventListener('click', () => {
 //Confirmar------------------------
 document.getElementById('btnConfirmar').addEventListener('click', () => {
 	//Edicion
-	if(modo === 1){
+	if (modo === 1) {
 		console.log("aceptar edicion");
-
 		document.querySelectorAll('.editable-row').forEach((fila, filaIndex) => {
 			const celdas = fila.querySelectorAll('.editable');
 			const cambios = {};
-	
+
 			celdas.forEach(celda => {
 				const input = celda.querySelector('input');
 				const key = celda.getAttribute('data-key');
 				const nuevo = input.value.trim();
 				const original = valoresOriginales[filaIndex][key];
-	
+
 				// Comparar original vs nuevo
 				if (nuevo !== original) {
 					cambios["id_Carrera"] = fila.dataset.id;
 					cambios[key] = nuevo;
 				}
-	
+
 				// Mostrar valor final
 				celda.innerHTML = nuevo;
 			});
-	
+
 			if (Object.keys(cambios).length > 0) {
-				console.log(`Cambios en fila ${filaIndex + 1}:`, cambios);
-				// Aquí puedes llamar a una función para enviar estos cambios por fetch
+				fetch("php/editar_carrera.php", {
+					method: "POST",
+					headers: { "Content-Type": "application/x-www-form-urlencoded" },
+					body: `id=${encodeURIComponent(cambios.id_Carrera)}&nom=${encodeURIComponent(cambios.nombre)}`
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.status === "ok") {
+							console.log(`Cambios en fila ${filaIndex + 1}:`, cambios);
+						} else {
+							alert("Hubo un error al actualizar datos: " + (data.error || "desconocido"));
+						}
+					})
+					.catch(error => {
+						console.error("Error en la solicitud:", error);
+					});
 			}
 		});
-	}else
-	//Eliminacion
-	if(modo === 2){
-		console.log("aceptar eliminacion");
-	}
+	} else
+		//Eliminacion
+		if (modo === 2) {
+			console.log("aceptar eliminacion");
+			const seleccionados = document.querySelectorAll('.checkbox-becado:checked');
+			if (seleccionados.length > 0) {
+				if(!confirm("¿Eliminar registros?\nEsta acción no se puede revertir.")){
+					return;
+				}
+				seleccionados.forEach(checkbox => {
+					const fila = checkbox.closest('tr'); // Sube al <tr>
+					const id = fila.dataset.id;
+					
+					fetch("php/eliminar_carrera.php", {
+						method: "POST",
+						headers: { "Content-Type": "application/x-www-form-urlencoded" },
+						body: `id=${encodeURIComponent(id)}`
+					})
+						.then(response => response.json())
+						.then(data => {
+							console.log("ID eliminado:", id);
+						})
+						.catch(error => {
+							alert("Este registro está enlazado con otros registros.");
+						});
+					});
+			} else {
+				alert('Selecciona al menos un elemento para eliminar.');
+			}
+			document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
+			document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
+		}
+
+	cargarCarreras();
 	document.getElementById('confirmPanel').classList.add('hidden');
 	document.getElementById('adminPanel').classList.remove('hidden');
 });
 
-if (modo === 1) {
-	console.log("aceptar edicion");
+//Filtrar--------------------------
+document.getElementById('buscador').addEventListener('input', function () {
+	const filtro = this.value.toLowerCase();
+	const filas = document.querySelectorAll('#cuerpoTablaCarreras tr');
 
-	const filas = document.querySelectorAll('.editable-row');
-	filas.forEach((fila, filaIndex) => {
-		const datosEditados = {};
-		const celdas = fila.querySelectorAll('.editable');
-
-		celdas.forEach(celda => {
-			const input = celda.querySelector('input');
-			const key = celda.getAttribute('data-key');
-
-			if (input) {
-				const nuevoValor = input.value;
-				datosEditados[key] = nuevoValor;
-				celda.innerHTML = nuevoValor; // dejar el nuevo valor visible
-			}
-		});
-
-		console.log(`Fila ${filaIndex + 1}:`, datosEditados);
+	filas.forEach(fila => {
+		const texto = fila.textContent.toLowerCase();
+		if (texto.includes(filtro)) {
+			fila.style.display = ''; // mostrar
+		} else {
+			fila.style.display = 'none'; // ocultar
+		}
 	});
-
-	document.getElementById('confirmPanel').classList.add('hidden');
-	document.getElementById('adminPanel').classList.remove('hidden');
-}
+});
 
 
 window.addEventListener('DOMContentLoaded', () => {
