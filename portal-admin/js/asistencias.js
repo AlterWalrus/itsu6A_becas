@@ -154,9 +154,23 @@ document.addEventListener("click", function (event) {
 });
 
 document.getElementById("btnBecados").addEventListener("click", function () {
-	window.location.href = "Becados.html";
+	//window.location.href = "Becados.html";
+	localStorage.setItem("tablaNombre", "Alumno");
+	window.location.href = "crud.html";
+});
+
+document.getElementById("btnCafeterias").addEventListener("click", function () {
+	localStorage.setItem("tablaNombre", "Cafeteria");
+	window.location.href = "crud.html";
 });
 
 document.getElementById("btnCarreras").addEventListener("click", function () {
-	window.location.href = "Carreras.html";
+	//window.location.href = "Carreras.html";
+	localStorage.setItem("tablaNombre", "Carrera");
+	window.location.href = "crud.html";
+});
+
+document.getElementById("btnUsuarios").addEventListener("click", function () {
+	localStorage.setItem("tablaNombre", "Usuario");
+	window.location.href = "crud.html";
 });

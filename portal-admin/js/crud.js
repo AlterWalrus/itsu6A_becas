@@ -4,6 +4,7 @@ document.getElementById("btnPanel").addEventListener("click", function () {
 });
 
 //CONCEDER PERMISOS SEGUN ROL
+var tablaNombre = localStorage.getItem("tablaNombre");
 const usuario = {
 	nombre: localStorage.getItem("usuarioNombre"),
 	rol: localStorage.getItem("usuarioRol")
@@ -15,19 +16,19 @@ if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
 
 //MODAL PA AGREGAR WNS
 document.getElementById('btnAgregar').addEventListener('click', () => {
-	document.getElementById('agregarCarrera').classList.remove('hidden');
+	document.getElementById('agregar').classList.remove('hidden');
 	document.body.classList.add('modal-open');
 });
 
 document.getElementById("cancelarModal").addEventListener("click", () => {
 	if (confirm("¿Cancelar registro?")) {
-		document.getElementById('agregarCarrera').classList.add('hidden');
+		document.getElementById('agregar').classList.add('hidden');
 		document.body.classList.remove('modal-open');
 		resetearCampos();
 	}
 });
 
-document.getElementById("formCarrera").addEventListener("submit", function (e) {
+document.getElementById("form").addEventListener("submit", function (e) {
 	e.preventDefault();
 	var nom = document.getElementById("Nombre").value;
 
@@ -37,7 +38,6 @@ document.getElementById("formCarrera").addEventListener("submit", function (e) {
 		return;
 	}
 
-	/*
 	fetch("php/registro_carrera.php", {
 		method: "POST",
 		headers: {
@@ -49,13 +49,13 @@ document.getElementById("formCarrera").addEventListener("submit", function (e) {
 		.then(data => {
 			if (data.status === "ok") {
 				//Registro exitoso
-				document.getElementById("agregarCarrera").classList.add("hidden");
+				document.getElementById("agregar").classList.add("hidden");
 				document.getElementById("exitoBox").classList.remove("hidden");
 				document.getElementById("btnIrDashboard").addEventListener("click", () => {
 					document.getElementById("exitoBox").classList.add("hidden");
 					document.body.classList.remove('modal-open');
 					resetearCampos();
-					cargarCarreras();
+					cargarDatos();
 				});
 			} else {
 				alert("Hubo un error al registrar: " + (data.error || "desconocido"));
@@ -64,7 +64,6 @@ document.getElementById("formCarrera").addEventListener("submit", function (e) {
 		.catch(error => {
 			console.error("Error en la solicitud:", error);
 		});
-		*/
 });
 
 function resetearCampos() {
@@ -72,35 +71,72 @@ function resetearCampos() {
 }
 
 //CARGAR WNS
-async function cargarCarreras() {
-	try {
-		const resBecados = await fetch('php/cargar.php');
-		const becados = await resBecados.json();
+async function cargarDatos() {
+	fetch("php/cargar.php", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+		body: `tablaNombre=${encodeURIComponent(tablaNombre)}`
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (!Array.isArray(data) || data.length === 0) {
+				console.warn("No hay datos para mostrar.");
+				return;
+			}
 
-		const tbody = document.getElementById('cuerpoTablaCarreras');
-		tbody.innerHTML = "";
+			const thead = document.querySelector("#tabla thead tr");
+			const tbody = document.getElementById("cuerpoTabla");
 
-		becados.forEach((becado, index) => {
-			const tr = document.createElement('tr');
-			tr.classList.add('editable-row');
+			thead.innerHTML = `
+		<th class="px-2 py-2 hidden checkbox-col">Eliminar</th>
+		<th class="px-2 py-2 w-10">#</th>
+	`;
+			tbody.innerHTML = "";
 
-			tr.dataset.id = becado.id_Carrera;
+			const keys = Object.keys(data[0]);
+			let idKey = null;
 
-			tr.innerHTML = `
-				<td class="px-2 py-2 hidden checkbox-col">
-					<input type="checkbox" class="checkbox-becado" />
-				</td>
-				<td class="px-2 py-2">${index + 1}</td>
-				<td class="px-2 py-2 editable" data-key="nombre">${becado.Nombre}</td>
-				</td>
-			`;
-			tbody.appendChild(tr);
+			// Detectar clave que parece ser el ID
+			keys.forEach(key => {
+				if (/^id_/i.test(key)) {
+					idKey = key; // Guardamos la clave del ID
+				} else {
+					thead.innerHTML += `<th class="px-2 py-2">${key}</th>`;
+				}
+			});
+
+			// Generar cuerpo
+			data.forEach((fila, index) => {
+				const tr = document.createElement('tr');
+				if (idKey) {
+					tr.dataset.id = fila[idKey];
+				}
+
+				let html = `
+			<td class="px-2 py-2 hidden checkbox-col">
+				<input type="checkbox" class="checkbox-dato" />
+			</td>
+			<td class="px-2 py-2">${index + 1}</td>
+		`;
+
+				keys.forEach(key => {
+					if (key !== idKey) {
+						html += `<td class="px-2 py-2 editable" data-key="${key}">${fila[key]}</td>`;
+					}
+				});
+
+				tr.innerHTML = html;
+				tbody.appendChild(tr);
+			});
+		})
+		.catch(error => {
+			console.error("Error en la solicitud:", error);
 		});
-	} catch (error) {
-		console.error("Error al cargar datos:", error);
-	}
-}
 
+}
+/*
 //MODIFICAR Y ELIMINAR-------------
 var modo = 0;
 var valoresOriginales = {};
@@ -163,13 +199,14 @@ document.getElementById('btnCancelar').addEventListener('click', () => {
 		if (modo === 2) {
 			console.log("cancelar eliminacion");
 			document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
-			document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
+			document.querySelectorAll('.checkbox-dato').forEach(c => (c.checked = false));
 		}
 	document.getElementById('confirmPanel').classList.add('hidden');
 	document.getElementById('adminPanel').classList.remove('hidden');
 });
 
 //Confirmar------------------------
+
 document.getElementById('btnConfirmar').addEventListener('click', () => {
 	//Edicion
 	if (modo === 1) {
@@ -186,19 +223,19 @@ document.getElementById('btnConfirmar').addEventListener('click', () => {
 
 				// Comparar original vs nuevo
 				if (nuevo !== original) {
-					cambios["id_Carrera"] = fila.dataset.id;
+					cambios["id_"] = fila.dataset.id;
 					cambios[key] = nuevo;
 				}
 
 				// Mostrar valor final
 				celda.innerHTML = nuevo;
 			});
-			/*
+
 			if (Object.keys(cambios).length > 0) {
-				fetch("php/modificar.php", {
+				fetch("php/editar_carrera.php", {
 					method: "POST",
 					headers: { "Content-Type": "application/x-www-form-urlencoded" },
-					body: `id=${encodeURIComponent(cambios.id_Carrera)}&nom=${encodeURIComponent(cambios.nombre)}`
+					body: `id=${encodeURIComponent(cambios.id_)}&nom=${encodeURIComponent(cambios.nombre)}`
 				})
 					.then(response => response.json())
 					.then(data => {
@@ -212,22 +249,21 @@ document.getElementById('btnConfirmar').addEventListener('click', () => {
 						console.error("Error en la solicitud:", error);
 					});
 			}
-					*/
 		});
 	} else
 		//Eliminacion
 		if (modo === 2) {
 			console.log("aceptar eliminacion");
-			const seleccionados = document.querySelectorAll('.checkbox-becado:checked');
+			const seleccionados = document.querySelectorAll('.checkbox-dato:checked');
 			if (seleccionados.length > 0) {
-				if(!confirm("¿Eliminar " + seleccionados.length + " registro(s)?\nEsta acción no se puede revertir.")){
+				if(!confirm("¿Eliminar ", seleccionados.length, " registro(s)?\nEsta acción no se puede revertir.")){
 					return;
 				}
 				seleccionados.forEach(checkbox => {
 					const fila = checkbox.closest('tr'); // Sube al <tr>
 					const id = fila.dataset.id;
-					/*
-					fetch("php/eliminar.php", {
+					
+					fetch("php/eliminar_carrera.php", {
 						method: "POST",
 						headers: { "Content-Type": "application/x-www-form-urlencoded" },
 						body: `id=${encodeURIComponent(id)}`
@@ -239,20 +275,20 @@ document.getElementById('btnConfirmar').addEventListener('click', () => {
 						.catch(error => {
 							alert("Este registro está enlazado con otros registros.");
 						});
-						*/
 					});
-					
-			} else {
+			} else { 
 				alert('Selecciona al menos un elemento para eliminar.');
 			}
 			document.querySelectorAll('.checkbox-col').forEach(col => col.classList.add('hidden'));
-			document.querySelectorAll('.checkbox-becado').forEach(c => (c.checked = false));
+			document.querySelectorAll('.checkbox-dato').forEach(c => (c.checked = false));
 		}
 
-	cargarCarreras(); 
+	cargarDatos(); 
 	document.getElementById('confirmPanel').classList.add('hidden');
 	document.getElementById('adminPanel').classList.remove('hidden');
 });
+
+*/
 
 //Filtrar--------------------------
 document.getElementById('buscador').addEventListener('input', function () {
@@ -271,5 +307,6 @@ document.getElementById('buscador').addEventListener('input', function () {
 
 
 window.addEventListener('DOMContentLoaded', () => {
-	cargarCarreras();
+	document.getElementById("titulo").textContent = "Administrar " + tablaNombre + "s";
+	cargarDatos();
 });
