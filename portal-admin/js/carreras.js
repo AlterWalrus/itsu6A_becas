@@ -37,7 +37,6 @@ document.getElementById("formCarrera").addEventListener("submit", function (e) {
 		return;
 	}
 
-	/*
 	fetch("php/registro_carrera.php", {
 		method: "POST",
 		headers: {
@@ -64,7 +63,6 @@ document.getElementById("formCarrera").addEventListener("submit", function (e) {
 		.catch(error => {
 			console.error("Error en la solicitud:", error);
 		});
-		*/
 });
 
 function resetearCampos() {
@@ -193,7 +191,7 @@ document.getElementById('btnConfirmar').addEventListener('click', () => {
 				// Mostrar valor final
 				celda.innerHTML = nuevo;
 			});
-			/*
+			
 			if (Object.keys(cambios).length > 0) {
 				fetch("php/modificar.php", {
 					method: "POST",
@@ -212,7 +210,6 @@ document.getElementById('btnConfirmar').addEventListener('click', () => {
 						console.error("Error en la solicitud:", error);
 					});
 			}
-					*/
 		});
 	} else
 		//Eliminacion

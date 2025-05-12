@@ -13,3 +13,10 @@ INSERT INTO `checktec`.`asistencia` (`id_Asistencia`, `Fecha_asistencia`, `id_Al
 INSERT INTO `checktec`.`asistencia` (`id_Asistencia`, `Fecha_asistencia`, `id_Alumno`) VALUES ('4', '2025-04-01 12:00:00', '3');
 INSERT INTO `checktec`.`asistencia` (`id_Asistencia`, `Fecha_asistencia`, `id_Alumno`) VALUES ('5', '2025-04-02 12:00:00', '3');
 INSERT INTO `checktec`.`asistencia` (`id_Asistencia`, `Fecha_asistencia`, `id_Alumno`) VALUES ('6', '2025-04-03 12:00:00', '3');
+
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-12 12:00:00', '1');
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-13 12:00:00', '1');
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-12 12:00:00', '2');
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-11 12:00:00', '1');
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-14 12:00:00', '3');
+INSERT INTO `checktec`.`asistencia` (`Fecha_asistencia`, `id_Alumno`) VALUES ('2025-05-13 12:00:00', '3');

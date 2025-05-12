@@ -23,6 +23,7 @@ try {
 
     // Devolver resultado en formato JSON
     echo json_encode($datos);
+	$conn->close();
 } catch (Exception $e) {
     echo json_encode([
         "error" => "Error al consultar datos: " . $e->getMessage()
