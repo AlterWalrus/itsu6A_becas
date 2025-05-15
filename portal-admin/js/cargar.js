@@ -80,17 +80,11 @@ function crearCuerpoTabla(data) {
 				<td class="px-2 py-2">${index + 1}</td>
 			`;
 
+		estatus = { 1: "Activo", 0: "Suspendido" };
 		keys.forEach(key => {
 			if (key !== idKey) {
 				if (key == "estatus_beca") {
-					html += `
-				<td class="px-2 py-2">
-					<select class="rounded px-2 py-1 border border-gray-300">
-						<option value="1" ${fila[key] == 1 ? 'selected' : ''}>🟢 Activo</option>
-						<option value="0" ${fila[key] == 0 ? 'selected' : ''}>🔴 Suspendido</option>
-					</select>
-				</td>
-			`;
+					html += `<td class="px-2 py-2 editable" data-key="${key}">${estatus[fila[key]]}</td>`;
 				} else if (key == "id_Carrera") {
 					html += `<td class="px-2 py-2 editable" data-key="${key}">${carreras[fila[key]]}</td>`;
 				} else if (key == "id_Cafeteria") {

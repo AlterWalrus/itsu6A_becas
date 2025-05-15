@@ -7,7 +7,8 @@ function iniciarEdicion() {
 	const camposConSelect = {
 		id_Carrera: carreras,
 		id_Cafeteria: cafeterias,
-		Semestre: semestres
+		Semestre: semestres,
+		estatus_beca: { 1: "Activo", 0: "Suspendido" }
 	};
 
 	valoresOriginales = {};
