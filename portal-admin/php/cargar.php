@@ -2,17 +2,14 @@
 require 'conexion.php';
 
 try {
-    // Lista blanca de tablas válidas
     $tablasPermitidas = ['Alumno', 'Carrera', 'Cafeteria', 'Usuario'];
 
-    // Validar entrada
     if (!isset($_POST['tablaNombre']) || !in_array($_POST['tablaNombre'], $tablasPermitidas)) {
         throw new Exception("Nombre de tabla no válido.");
     }
 
     $tabla = $_POST['tablaNombre'];
     
-    // Construir consulta directamente ya que el nombre de tabla no puede ser un parámetro
     $sql = "SELECT * FROM $tabla";
     $resultado = $conn->query($sql);
 
@@ -21,7 +18,6 @@ try {
         $datos[] = $fila;
     }
 
-    // Devolver resultado en formato JSON
     echo json_encode($datos);
 	$conn->close();
 } catch (Exception $e) {
