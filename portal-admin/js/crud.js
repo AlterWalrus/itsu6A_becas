@@ -80,6 +80,6 @@ document.getElementById('buscador').addEventListener('input', function () {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-	document.getElementById("titulo").textContent = "Administrar " + tablaNombre + "s";
+	document.getElementById("titulo").textContent = " | Administrar " + tablaNombre + "s";
 	cargarDatos();
 });

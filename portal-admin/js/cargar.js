@@ -111,34 +111,50 @@ function crearFormulario(vkeys) {
 		Rol: { "Admin": "Admin", "Miembro_CESA": "Miembro_CESA" }
 	};
 
-	form.querySelectorAll('input, select, textarea, label').forEach(el => el.remove());
+	form.querySelectorAll('input, select, textarea, label, .huella-container').forEach(el => el.remove());
+
+	if (tablaNombre === "Alumno") {
+		const huellaHTML = `
+			<div class="huella-container flex items-center gap-1 mb-4">
+				<button id="btnCapturarHuella" type="button"
+					class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 flex items-center gap-2">
+					<img src="img/huellaBoton.png" alt="Huella" class="w-6 h-6">
+					Capturar Huella
+				</button>
+				<span id="estadoHuella" class="text-gray-600 text-sm mx-4">Huella no registrada</span>
+			</div>
+		`;
+		form.insertAdjacentHTML("afterbegin", huellaHTML);
+	}
+
+	// Agregar los campos al formulario
 	[...vkeys].reverse().forEach(key => {
 		if (camposExcluidos.includes(key)) return;
 
 		let inputElement = "";
 		if (key in camposConSelect) {
-			//Select
+			// Select
 			let opciones = Object.entries(camposConSelect[key]).map(([valor, texto]) =>
 				`<option value="${valor}">${texto}</option>`
 			).join("");
 
 			inputElement = `
-							<label class="block">
-								<span class="text-sm font-medium">${nombreColumna(key)}</span>
-								<select name="${key}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-									${opciones}
-								</select>
-							</label>
-						`;
+				<label class="block">
+					<span class="text-sm font-medium">${nombreColumna(key)}</span>
+					<select name="${key}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+						${opciones}
+					</select>
+				</label>
+			`;
 		} else {
-			//Campo de texto normal
+			// Campo de texto
 			inputElement = `
-							<label class="block">
-								<span class="text-sm font-medium">${nombreColumna(key)}</span>
-								<input name="${key}" type="text" placeholder="${nombreColumna(key)}"
-									class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-							</label>
-						`;
+				<label class="block">
+					<span class="text-sm font-medium">${nombreColumna(key)}</span>
+					<input name="${key}" type="text" placeholder="${nombreColumna(key)}"
+						class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+				</label>
+			`;
 		}
 
 		form.insertAdjacentHTML("afterbegin", inputElement);
