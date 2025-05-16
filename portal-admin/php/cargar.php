@@ -2,7 +2,7 @@
 require 'conexion.php';
 
 try {
-    $tablasPermitidas = ['Alumno', 'Carrera', 'Cafeteria', 'Usuario'];
+    $tablasPermitidas = ['alumno', 'carrera', 'cafeteria', 'usuario'];
 
     if (!isset($_POST['tablaNombre']) || !in_array($_POST['tablaNombre'], $tablasPermitidas)) {
         throw new Exception("Nombre de tabla no válido.");

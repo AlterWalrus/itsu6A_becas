@@ -5,7 +5,7 @@ async function cargarDatos() {
 		const resCafeterias = await fetch("php/cargar.php", {
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
-			body: `tablaNombre=Cafeteria`
+			body: `tablaNombre=cafeteria`
 		});
 		const dataCafeterias = await resCafeterias.json();
 		cafeterias = {};
@@ -17,7 +17,7 @@ async function cargarDatos() {
 		const resCarreras = await fetch("php/cargar.php", {
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
-			body: `tablaNombre=Carrera`
+			body: `tablaNombre=carrera`
 		});
 		const dataCarreras = await resCarreras.json();
 		carreras = {};
@@ -29,7 +29,7 @@ async function cargarDatos() {
 		const resDatos = await fetch("php/cargar.php", {
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
-			body: `tablaNombre=${encodeURIComponent(tablaNombre)}`
+			body: `tablaNombre=${encodeURIComponent(tablaNombre.toLowerCase())}`
 		});
 		const data = await resDatos.json();
 

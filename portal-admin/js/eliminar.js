@@ -22,7 +22,7 @@ function confirmarEliminacion() {
 			fetch("php/eliminar.php", {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
-				body: `tabla=${encodeURIComponent(tablaNombre)}&id=${encodeURIComponent(id)}`
+				body: `tabla=${encodeURIComponent(tablaNombre.toLowerCase())}&id=${encodeURIComponent(id)}`
 			})
 				.then(response => response.json())
 				.then(data => {

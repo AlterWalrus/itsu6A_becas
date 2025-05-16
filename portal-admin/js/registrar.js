@@ -25,7 +25,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
 		datos[clave] = valor;
 	}
 
-	datos['tabla'] = tablaNombre;
+	datos['tabla'] = tablaNombre.toLowerCase();
 	fetch('php/registrar.php', {
 		method: 'POST',
 		headers: {
@@ -52,7 +52,10 @@ document.getElementById("form").addEventListener("submit", function (e) {
 
 function resetearCampos() {
 	const form = document.getElementById("form");
-	document.getElementById("estadoHuella").textContent = "Huella no registrada";
+	estadoHuella = document.getElementById("estadoHuella");
+	if(estadoHuella != null){
+		estadoHuella.textContent = "Huella no registrada";
+	}
 
 	// Limpiar los valores de todos los campos excepto los excluidos
 	form.querySelectorAll("input, select, textarea").forEach(el => {

@@ -108,7 +108,7 @@ function confirmarEdicion() {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					tabla: tablaNombre,
+					tabla: tablaNombre.toLowerCase(),
 					cambios: cambios
 				})
 			})
