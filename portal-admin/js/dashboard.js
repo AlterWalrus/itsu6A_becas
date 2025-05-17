@@ -116,7 +116,7 @@ document.addEventListener("change", function (e) {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				tabla: "Alumno",
+				tabla: "alumno",
 				cambios: {
 					id_: id,
 					estatus_beca: nuevoEstatus

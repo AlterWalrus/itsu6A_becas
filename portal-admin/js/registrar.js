@@ -74,8 +74,8 @@ document.addEventListener("click", function (e) {
 		const estado = document.getElementById("estadoHuella");
 		estado.textContent = "Esperando huella...";
 
-		/*
-		fetch("php/capturar_huella.php", {
+		
+		fetch("php/registrar_huella.php", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded"
@@ -84,6 +84,7 @@ document.addEventListener("click", function (e) {
 		})
 			.then(response => response.json())
 			.then(data => {
+				console.log(data);
 				if (data.exito) {
 					estado.textContent = "✅ Huella registrada con éxito";
 					estado.classList.remove("text-gray-600");
@@ -100,6 +101,6 @@ document.addEventListener("click", function (e) {
 				estado.classList.remove("text-gray-600");
 				estado.classList.add("text-red-600");
 			});
-			*/
+			
 	}
 });
