@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `checktec`.`alumno` (
   `Correo` VARCHAR(45) NULL DEFAULT NULL,
   `Telefono` VARCHAR(15) NULL DEFAULT NULL,
   `estatus_beca` TINYINT(4) NOT NULL DEFAULT 1,
+  `Huella` INT(11) NOT NULL,
   PRIMARY KEY (`id_Alumno`),
   UNIQUE INDEX `No_Control_UNIQUE` (`No_Control` ASC),
   UNIQUE INDEX `Correo_UNIQUE` (`Correo` ASC),
@@ -109,27 +110,6 @@ CREATE TABLE IF NOT EXISTS `checktec`.`asistencia` (
   PRIMARY KEY (`id_Asistencia`),
   INDEX `fk_Asistencia_Alumno_idx` (`id_Alumno` ASC),
   CONSTRAINT `fk_Asistencia_Alumno`
-    FOREIGN KEY (`id_Alumno`)
-    REFERENCES `checktec`.`alumno` (`id_Alumno`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `checktec`.`huella`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `checktec`.`huella` ;
-
-CREATE TABLE IF NOT EXISTS `checktec`.`huella` (
-  `id_Huella` INT(11) NOT NULL AUTO_INCREMENT,
-  `Data` BLOB NOT NULL,
-  `Fecha_registro` DATETIME NOT NULL,
-  `id_Alumno` INT(11) NOT NULL,
-  PRIMARY KEY (`id_Huella`, `id_Alumno`),
-  INDEX `fk_Huella_Alumno1_idx` (`id_Alumno` ASC),
-  CONSTRAINT `fk_Huella_Alumno1`
     FOREIGN KEY (`id_Alumno`)
     REFERENCES `checktec`.`alumno` (`id_Alumno`)
     ON DELETE NO ACTION

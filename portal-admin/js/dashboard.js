@@ -169,7 +169,7 @@ const usuario = {
 	rol: localStorage.getItem("usuarioRol")
 };
 
-document.querySelector('h2').innerText = `¡Bienvenido, ${usuario.nombre}!`;
+document.querySelector('h2').innerText = `¡Te damos la bienvenida, ${usuario.nombre}!`;
 
 const buscador = document.getElementById('buscador');
 if (buscador) {
@@ -182,9 +182,6 @@ if (buscador) {
 		});
 	});
 }
-
-let editMode = false;
-let originalValues = {};
 
 // Menú contextual
 document.getElementById("menuToggle").addEventListener("click", () => {

@@ -1,4 +1,6 @@
 //MODAL PA AGREGAR WNS------------------------------------------------------
+var huella = -1;
+
 document.getElementById('btnAgregar').addEventListener('click', () => {
 	document.getElementById('agregar').classList.remove('hidden');
 	document.body.classList.add('modal-open');
@@ -24,8 +26,14 @@ document.getElementById("form").addEventListener("submit", function (e) {
 		}
 		datos[clave] = valor;
 	}
+	
+	if(tablaNombre == 'Alumno' && huella == -1){
+		alert("Por favor, registre la huella digital.");
+		return;
+	}
 
 	datos['tabla'] = tablaNombre.toLowerCase();
+	datos['Huella'] = huella;
 	fetch('php/registrar.php', {
 		method: 'POST',
 		headers: {
@@ -56,6 +64,7 @@ function resetearCampos() {
 	if(estadoHuella != null){
 		estadoHuella.textContent = "Huella no registrada";
 	}
+	huella = -1;
 
 	// Limpiar los valores de todos los campos excepto los excluidos
 	form.querySelectorAll("input, select, textarea").forEach(el => {
@@ -72,8 +81,12 @@ function resetearCampos() {
 document.addEventListener("click", function (e) {
 	if (e.target && e.target.id === "btnCapturarHuella") {
 		const estado = document.getElementById("estadoHuella");
+		document.getElementById("btnCapturarHuella").disabled = true;
+		
+		estado.classList.remove("text-green-600");
+		estado.classList.remove("text-red-600");
+		estado.classList.add("text-gray-600");
 		estado.textContent = "Esperando huella...";
-
 		
 		fetch("php/registrar_huella.php", {
 			method: "POST",
@@ -86,6 +99,7 @@ document.addEventListener("click", function (e) {
 			.then(data => {
 				console.log(data);
 				if (data.exito) {
+					huella = data.mensaje;
 					estado.textContent = "✅ Huella registrada con éxito";
 					estado.classList.remove("text-gray-600");
 					estado.classList.add("text-green-600");
@@ -94,13 +108,15 @@ document.addEventListener("click", function (e) {
 					estado.classList.remove("text-gray-600");
 					estado.classList.add("text-red-600");
 				}
+				document.getElementById("btnCapturarHuella").disabled = false;
 			})
 			.catch(error => {
 				console.error("Error al capturar huella:", error);
 				estado.textContent = "❌ Error de comunicación con el sensor";
 				estado.classList.remove("text-gray-600");
 				estado.classList.add("text-red-600");
+				document.getElementById("btnCapturarHuella").disabled = false;
 			});
-			
 	}
 });
+

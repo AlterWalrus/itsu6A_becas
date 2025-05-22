@@ -8,7 +8,8 @@ function iniciarEdicion() {
 		id_Carrera: carreras,
 		id_Cafeteria: cafeterias,
 		Semestre: semestres,
-		estatus_beca: { 1: "Activo", 0: "Suspendido" }
+		estatus_beca: { 1: "Activo", 0: "Suspendido" },
+		Rol: { "Admin": "Admin", "Miembro_CESA": "Miembro_CESA" }
 	};
 
 	valoresOriginales = {};
@@ -68,10 +69,8 @@ function confirmarEdicion() {
 	const camposConSelect = {
 		id_Carrera: carreras,
 		id_Cafeteria: cafeterias,
-		Semestre: {
-			1: "Primero", 2: "Segundo", 3: "Tercero", 4: "Cuarto", 5: "Quinto",
-			6: "Sexto", 7: "Séptimo", 8: "Octavo", 9: "Noveno", 10: "Décimo"
-		}
+		Semestre: semestres,
+		Rol: { "Admin": "Admin", "Miembro_CESA": "Miembro_CESA" }
 	};
 
 	document.querySelectorAll('.editable-row').forEach((fila, filaIndex) => {

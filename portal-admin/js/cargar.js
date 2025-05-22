@@ -48,7 +48,9 @@ async function cargarDatos() {
 
 		const keys = Object.keys(data[0]);
 		let vkeys = keys.slice(1); // saltar ID
-		campos = vkeys;
+		if(vkeys.indexOf('Huella') != -1){
+			vkeys.splice(vkeys.indexOf('Huella'));
+		}
 
 		vkeys.forEach(key => {
 			thead.innerHTML += `<th class="px-2 py-2">${nombreColumna(key)}</th>`;
@@ -64,6 +66,8 @@ async function cargarDatos() {
 }
 
 function crearCuerpoTabla(data) {
+	const camposExcluidos = ["Huella"];
+	
 	const tbody = document.getElementById("cuerpoTabla");
 	const keys = Object.keys(data[0]);
 	let idKey = keys[0];
@@ -82,18 +86,18 @@ function crearCuerpoTabla(data) {
 
 		estatus = { 1: "Activo", 0: "Suspendido" };
 		keys.forEach(key => {
-			if (key !== idKey) {
-				if (key == "estatus_beca") {
-					html += `<td class="px-2 py-2 editable" data-key="${key}">${estatus[fila[key]]}</td>`;
-				} else if (key == "id_Carrera") {
-					html += `<td class="px-2 py-2 editable" data-key="${key}">${carreras[fila[key]]}</td>`;
-				} else if (key == "id_Cafeteria") {
-					html += `<td class="px-2 py-2 editable" data-key="${key}">${cafeterias[fila[key]]}</td>`;
-				} else if (key == "Semestre") {
-					html += `<td class="px-2 py-2 editable" data-key="${key}">${semestres[fila[key]]}</td>`;
-				} else {
-					html += `<td class="px-2 py-2 editable" data-key="${key}">${fila[key]}</td>`;
-				}
+			if (key === idKey || camposExcluidos.includes(key)) return;
+
+			if (key == "estatus_beca") {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${estatus[fila[key]]}</td>`;
+			} else if (key == "id_Carrera") {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${carreras[fila[key]]}</td>`;
+			} else if (key == "id_Cafeteria") {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${cafeterias[fila[key]]}</td>`;
+			} else if (key == "Semestre") {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${semestres[fila[key]]}</td>`;
+			} else {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${fila[key]}</td>`;
 			}
 		});
 		tr.innerHTML = html;
@@ -103,7 +107,7 @@ function crearCuerpoTabla(data) {
 
 function crearFormulario(vkeys) {
 	const form = document.getElementById("form");
-	const camposExcluidos = ["estatus_beca", "Ultimo_acceso"];
+	const camposExcluidos = ["estatus_beca", "Huella", "Ultimo_acceso"];
 	const camposConSelect = {
 		id_Carrera: carreras,
 		id_Cafeteria: cafeterias,
