@@ -4,13 +4,30 @@ const CONTACTO = "\r\n\r\nPara más información contacta a cesa.itsu.95@gmail.c
 let duracion = 1000;
 let resultadoTimeout;
 
+// Cargar cafeterías
+var cafeterias = {};
+cargarDatos();
+
+async function cargarDatos(){
+	const resCafeterias = await fetch("php/cargar.php", {
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: `tablaNombre=cafeteria`
+	});
+	const dataCafeterias = await resCafeterias.json();
+
+	dataCafeterias.forEach(cafe => {
+		cafeterias[cafe.id_Cafeteria] = cafe.Nombre;
+	});
+}
+
 setInterval(() => {
 	fetch("php/verificar_huella.php")
 		.then(res => res.json())
 		.then(data => {
 			if (data.huella_detectada) {
 				console.log(data);
-				fail = 8000;
+				var fail = 8000;
 				
 				if(data.estatus_beca === 0){
 					duracion = fail;
@@ -19,8 +36,9 @@ setInterval(() => {
 				}
 				
 				if(data.id_Cafeteria !== CAFE_ID){
+					cargarDatos();
 					duracion = fail;
-					mostrarResultado(false, data.Nombre + ", tu beca es para la cafetería " + data.id_Cafeteria + "." + CONTACTO);
+					mostrarResultado(false, data.Nombre + ", tu beca es para la cafetería " + cafeterias[data.id_Cafeteria] + "." + CONTACTO);
 					return;
 				}
 				
@@ -39,7 +57,10 @@ setInterval(() => {
 				.then(result => {
 					if (result.success) {
 						console.log("nueva asistencia");
-					}else{
+					} else if (result.error === "already_checked"){
+						duracion = fail;
+						mostrarResultado(false, data.Nombre + ", ya has cobrado tu beca hoy." + CONTACTO);
+					} else {
 						console.error("Error al registrar asistencia:", result.error);
 					}
 				})
