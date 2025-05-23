@@ -86,7 +86,7 @@ document.addEventListener("click", function (e) {
 		estado.classList.remove("text-green-600");
 		estado.classList.remove("text-red-600");
 		estado.classList.add("text-gray-600");
-		estado.textContent = "Esperando huella...";
+		estado.textContent = "Coloque y retire el dedo dos veces...";
 		
 		fetch("php/registrar_huella.php", {
 			method: "POST",

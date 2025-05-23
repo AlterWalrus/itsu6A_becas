@@ -7,15 +7,16 @@ document.getElementById("btnIniciar").addEventListener("click", function () {
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
-		body: `usuario=${encodeURIComponent(usuario)}&contrasenia=${encodeURIComponent(contrasenia)}`
+		body: `usuario=${encodeURIComponent(usuario)}&contrasenia=${encodeURIComponent(contrasenia)}`,
+		credentials: "include"
 	})
 		.then(response => response.json())
 		.then(data => {
+			console.log(data);
 			if (data.status === "ok") {
-				// Guardar datos en localStorage
-				localStorage.setItem("usuarioNombre", data.nombre);
-				localStorage.setItem("usuarioRol", data.rol);
-				window.location.href = "dashboard.html";
+				//localStorage.setItem("usuarioNombre", data.nombre);
+				//localStorage.setItem("usuarioRol", data.rol);
+				window.location.href = "dashboard.php";
 			} else {
 				alert("Credenciales incorrectas");
 			}

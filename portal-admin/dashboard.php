@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['nombre'])) {
+    header("Location: index.html");
+    exit();
+}
+
+$nombre = $_SESSION['nombre'];
+$rol = $_SESSION['rol'];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -50,7 +61,7 @@
 			<!-- Bienvenida -->
 			<div class="flex items-center mb-4 gap-2">
 				<h2 class="text-2xl font-semibold">
-					¡Bienvenido, <span id="nombreUsuario">[Nombre del usuario]</span>!
+					¡Bienvenido, <?php echo htmlspecialchars($nombre); ?>!
 				</h2>
 				<div class="m-auto"></div>
 				<img src="img/CESA_noborder.png" alt="Logo" class="h-12">

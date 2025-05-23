@@ -164,13 +164,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	cargarAsistencias(anio, semana);
 });
 
-const usuario = {
-	nombre: localStorage.getItem("usuarioNombre"),
-	rol: localStorage.getItem("usuarioRol")
-};
-
-document.querySelector('h2').innerText = `¡Te damos la bienvenida, ${usuario.nombre}!`;
-
 const buscador = document.getElementById('buscador');
 if (buscador) {
 	buscador.addEventListener('input', () => {
@@ -189,9 +182,7 @@ document.getElementById("menuToggle").addEventListener("click", () => {
 });
 
 function cerrarSesion() {
-	localStorage.removeItem("usuarioNombre");
-	localStorage.removeItem("usuarioRol");
-	window.location.href = "index.html";
+	window.location.href = "logout.php";
 };
 
 // Cerrar el menú contextual si se hace clic fuera de él
@@ -207,20 +198,20 @@ document.addEventListener("click", function (event) {
 
 document.getElementById("btnBecados").addEventListener("click", function () {
 	localStorage.setItem("tablaNombre", "Alumno");
-	window.location.href = "crud.html";
+	window.location.href = "crud.php";
 });
 
 document.getElementById("btnCafeterias").addEventListener("click", function () {
 	localStorage.setItem("tablaNombre", "Cafeteria");
-	window.location.href = "crud.html";
+	window.location.href = "crud.php";
 });
 
 document.getElementById("btnCarreras").addEventListener("click", function () {
 	localStorage.setItem("tablaNombre", "Carrera");
-	window.location.href = "crud.html";
+	window.location.href = "crud.php";
 });
 
 document.getElementById("btnUsuarios").addEventListener("click", function () {
 	localStorage.setItem("tablaNombre", "Usuario");
-	window.location.href = "crud.html";
+	window.location.href = "crud.php";
 });

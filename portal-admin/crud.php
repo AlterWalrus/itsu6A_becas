@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['nombre'])) {
+    header("Location: index.html");
+    exit();
+}
+
+$nombre = $_SESSION['nombre'];
+$rol = $_SESSION['rol'];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 

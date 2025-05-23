@@ -1,6 +1,6 @@
 //Regresar
 document.getElementById("btnPanel").addEventListener("click", function () {
-	window.location.href = "dashboard.html";
+	window.location.href = "dashboard.php";
 });
 
 const semestres =  {

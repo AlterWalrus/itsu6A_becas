@@ -1,7 +1,7 @@
-const DURACION_RESULTADO = 10000;
-const CAFE = 1;
-const CONTACTO = "\r\nPara más información contacte a CESA123@gmail.com";
+const CAFE_ID = 1;
+const CONTACTO = "\r\n\r\nPara más información contacta a cesa.itsu.95@gmail.com";
 
+let duracion = 1000;
 let resultadoTimeout;
 
 setInterval(() => {
@@ -10,12 +10,21 @@ setInterval(() => {
 		.then(data => {
 			if (data.huella_detectada) {
 				console.log(data);
+				fail = 8000;
 				
 				if(data.estatus_beca === 0){
-					mostrarResultado(false, data.Nombre + ", tu cuenta está actualmente suspendida." + CONTACTO);
+					duracion = fail;
+					mostrarResultado(false, data.Nombre + ", tu beca está actualmente suspendida." + CONTACTO);
 					return;
 				}
 				
+				if(data.id_Cafeteria !== CAFE_ID){
+					duracion = fail;
+					mostrarResultado(false, data.Nombre + ", tu beca es para la cafetería " + data.id_Cafeteria + "." + CONTACTO);
+					return;
+				}
+				
+				duracion = 5000;
 				mostrarResultado(true, "¡Buen provecho, " + data.Nombre + "!");
 
 				// Agregar asistencia
@@ -94,7 +103,7 @@ function mostrarResultado(exito, mensaje) {
 	// Volver automáticamente a bienvenida
 	resultadoTimeout = setTimeout(() => {
 		resetPantalla();
-	}, DURACION_RESULTADO);
+	}, duracion);
 }
 
 function resetPantalla() {
@@ -122,19 +131,3 @@ function resetPantalla() {
 		}
 	});
 }
-
-/*
-window.addEventListener('DOMContentLoaded', () => {
-    fetch('php/iniciar_detector.php')
-        .then(response => {
-            if (!response.ok) {
-                console.error("No se pudo iniciar el script de detección");
-            } else {
-                console.log("Script de detección iniciado correctamente");
-            }
-        })
-        .catch(error => {
-            console.error("Error al contactar PHP:", error);
-        });
-});
-*/
