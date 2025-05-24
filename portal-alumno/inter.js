@@ -121,7 +121,7 @@ function mostrarResultado(exito, mensaje) {
 		}
 	});
 
-	// Volver automáticamente a bienvenida
+	// Volver automaticamente a bienvenida
 	resultadoTimeout = setTimeout(() => {
 		resetPantalla();
 	}, duracion);

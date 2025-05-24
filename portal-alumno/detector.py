@@ -17,12 +17,13 @@ print("[INFO] Sensor de huellas activo. Esperando huellas...")
 
 while True:
     try:
-		# Si hay lock, saltar esta iteración
+		#Saltar
         if os.path.exists('/var/www/html/itsu6A_becas/lector_en_uso.lock'):
             time.sleep(1)
             print("[INFO] PAUSA")
             continue
 		
+		#Leer
         if sensor.readImage():
             sensor.convertImage(0x01)
             result = sensor.searchTemplate()
@@ -32,7 +33,6 @@ while True:
             else:
                 print(f"[INFO] Huella reconocida en la posición #{posicion}")
 
-                # Consulta a la base de datos
                 conn = mysql.connector.connect(
                     host='localhost',
                     user='root',
@@ -48,7 +48,6 @@ while True:
                 path = '/var/www/html/itsu6A_becas/portal-alumno/deteccion_actual.json'
 
                 if alumno:
-                    # Aquí puedes guardar el alumno en una tabla temporal o archivo para ser leído por el portal web
                     with open(path, 'w') as f:
                         import json
                         alumno['huella_detectada'] = True

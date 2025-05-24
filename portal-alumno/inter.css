@@ -6,7 +6,6 @@
 	filter: invert(31%) sepia(96%) saturate(5152%) hue-rotate(188deg) brightness(90%) contrast(101%);
 }
 
-/* Para animaciones suaves entre pantallas */
 #pantalla > div {
 	transition: opacity 0.5s ease, transform 0.5s ease;
 }
