@@ -1,4 +1,6 @@
 //CARGAR WNS
+const camposExcluidos = ["Huella", "Contrasenia"];
+
 async function cargarDatos() {
 	try {
 		// Cargar cafeterías
@@ -48,9 +50,9 @@ async function cargarDatos() {
 
 		const keys = Object.keys(data[0]);
 		let vkeys = keys.slice(1); // saltar ID
-		if(vkeys.indexOf('Huella') != -1){
-			vkeys.splice(vkeys.indexOf('Huella'));
-		}
+
+		//Quitar campos especificos
+		vkeys = vkeys.filter(k => !camposExcluidos.includes(k));
 
 		vkeys.forEach(key => {
 			thead.innerHTML += `<th class="px-2 py-2">${nombreColumna(key)}</th>`;
@@ -66,8 +68,6 @@ async function cargarDatos() {
 }
 
 function crearCuerpoTabla(data) {
-	const camposExcluidos = ["Huella"];
-	
 	const tbody = document.getElementById("cuerpoTabla");
 	const keys = Object.keys(data[0]);
 	let idKey = keys[0];
@@ -168,9 +168,7 @@ function crearFormulario(vkeys) {
 function nombreColumna(string) {
 	string = string.replace("_", " ");
 	string = string.replace("id ", "");
-	if (string == "Contrasenia") {
-		string = "Contraseña";
-	} else if (string == "Telefono") {
+	if (string == "Telefono") {
 		string = "Teléfono";
 	} else if (string == "Cafeteria") {
 		string = "Cafetería";

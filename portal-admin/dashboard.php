@@ -17,6 +17,7 @@ $rol = $_SESSION['rol'];
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Panel | CheckTec</title>
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<style>
 		.logo-azul {
   			filter: invert(31%) sepia(96%) saturate(5152%) hue-rotate(188deg) brightness(90%) contrast(101%);
@@ -86,6 +87,11 @@ $rol = $_SESSION['rol'];
 						class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow flex items-center gap-2">
 						<img src="img/book.png" alt="Huella" class="w-6 h-6">
 						Carreras
+					</button>
+					<button id="btnReporte"
+						class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow flex items-center gap-2">
+						<img src="img/ai.png" alt="Reporte" class="w-6 h-6">
+						Generar Reporte
 					</button>
 				</div>
 			</div>

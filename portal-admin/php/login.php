@@ -1,6 +1,5 @@
 <?php
 session_start(); // Habilita las sesiones
-//var_dump($_SESSION);
 
 require 'conexion.php';
 
