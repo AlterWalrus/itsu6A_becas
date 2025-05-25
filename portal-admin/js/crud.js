@@ -13,14 +13,10 @@ var campos = [];
 
 //CONCEDER PERMISOS SEGUN ROL
 var tablaNombre = localStorage.getItem("tablaNombre");
-const usuario = {
-	nombre: localStorage.getItem("usuarioNombre"),
-	rol: localStorage.getItem("usuarioRol")
-};
 
-if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
-	document.getElementById('adminPanel').classList.remove('hidden');
-}
+//if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
+//	document.getElementById('adminPanel').classList.remove('hidden');
+//}
 
 //MODIFICAR Y ELIMINAR-------------------------------------------------
 var modo = 0;

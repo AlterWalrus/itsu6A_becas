@@ -38,7 +38,7 @@ $rol = $_SESSION['rol'];
 	<!-- Contenedor semitransparente con sombra -->
 	<div class="bg-white/70 p-4 rounded shadow-md">
 		<!-- Panel dinámico según rol -->
-		<div id="adminPanel" class="mb-8 hidden">
+		<div id="adminPanel" class="mb-8">
 			<div class="flex justify-between mb-6">
 				<!-- Botones a la izquierda -->
 				<div class="flex gap-4">

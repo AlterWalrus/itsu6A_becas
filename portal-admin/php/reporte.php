@@ -1,7 +1,100 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require 'conexion.php';
+
+header('Content-Type: application/json');
+
+try {
+    $mesActual = date('m');
+    $anioActual = date('Y');
+
+    $reporte = "Reporte del mes actual ({$mesActual}/{$anioActual}):\n\n";
+
+    // Total de asistencias
+    $sql = "SELECT COUNT(*) AS total FROM asistencia WHERE MONTH(Fecha_asistencia) = $mesActual AND YEAR(Fecha_asistencia) = $anioActual";
+    $res = $conn->query($sql);
+    $row = $res->fetch_assoc();
+    $reporte .= "Total de asistencias: {$row['total']}\n";
+
+    // Alumno con más asistencias
+    $sql = "SELECT a.Nombre, a.Apellido_paterno, COUNT(*) AS total
+            FROM asistencia s
+            JOIN alumno a ON s.id_Alumno = a.id_Alumno
+            WHERE MONTH(s.Fecha_asistencia) = $mesActual AND YEAR(s.Fecha_asistencia) = $anioActual
+            GROUP BY s.id_Alumno
+            ORDER BY total DESC LIMIT 1";
+    $res = $conn->query($sql);
+    if ($row = $res->fetch_assoc()) {
+        $reporte .= "Alumno con más asistencias: {$row['Nombre']} {$row['Apellido_paterno']} ({$row['total']})\n";
+    }
+
+    // Carrera con menor asistencia
+    $sql = "SELECT c.Nombre, COUNT(*) AS total
+            FROM asistencia s
+            JOIN alumno a ON s.id_Alumno = a.id_Alumno
+            JOIN carrera c ON a.id_Carrera = c.id_Carrera
+            WHERE MONTH(s.Fecha_asistencia) = $mesActual AND YEAR(s.Fecha_asistencia) = $anioActual
+            GROUP BY c.id_Carrera
+            ORDER BY total ASC LIMIT 1";
+    $res = $conn->query($sql);
+    if ($row = $res->fetch_assoc()) {
+        $reporte .= "Carrera con menor asistencia: {$row['Nombre']} ({$row['total']})\n";
+    }
+
+    // Cafetería menos visitada
+    $sql = "SELECT caf.Nombre, COUNT(*) AS total
+            FROM asistencia s
+            JOIN alumno a ON s.id_Alumno = a.id_Alumno
+            JOIN cafeteria caf ON a.id_Cafeteria = caf.id_Cafeteria
+            WHERE MONTH(s.Fecha_asistencia) = $mesActual AND YEAR(s.Fecha_asistencia) = $anioActual
+            GROUP BY caf.id_Cafeteria
+            ORDER BY total ASC LIMIT 1";
+    $res = $conn->query($sql);
+    if ($row = $res->fetch_assoc()) {
+        $reporte .= "Cafetería menos visitada: {$row['Nombre']} ({$row['total']})\n";
+    }
+
+    // Semestre menos activo
+    $sql = "SELECT a.Semestre, COUNT(*) AS total
+            FROM asistencia s
+            JOIN alumno a ON s.id_Alumno = a.id_Alumno
+            WHERE MONTH(s.Fecha_asistencia) = $mesActual AND YEAR(s.Fecha_asistencia) = $anioActual
+            GROUP BY a.Semestre
+            ORDER BY total ASC LIMIT 1";
+    $res = $conn->query($sql);
+    if ($row = $res->fetch_assoc()) {
+        $reporte .= "Semestre con menor actividad: {$row['Semestre']} ({$row['total']})\n";
+    }
+
+    // Día más y menos activo
+    $sql = "SELECT DATE(Fecha_asistencia) AS dia, COUNT(*) AS total
+            FROM asistencia
+            WHERE MONTH(Fecha_asistencia) = $mesActual AND YEAR(Fecha_asistencia) = $anioActual
+            GROUP BY dia
+            ORDER BY total ASC";
+    $res = $conn->query($sql);
+    $diaMenor = $res->fetch_assoc(); // Primer resultado = menor
+    $res->data_seek($res->num_rows - 1); // Último resultado = mayor
+    $diaMayor = $res->fetch_assoc();
+    $reporte .= "Día más activo: {$diaMayor['dia']} ({$diaMayor['total']} asistencias)\n";
+    $reporte .= "Día menos activo: {$diaMenor['dia']} ({$diaMenor['total']} asistencias)\n";
+
+    // Cierre
+    $reporte .= "\n¿Puedes detectar algún patrón relevante o hacer recomendaciones a partir de estos datos?";
+
+    echo json_encode([
+        "status" => "ok",
+        "reporte" => $reporte
+    ]);
+    $conn->close();
+
+} catch (Exception $e) {
+    echo json_encode([
+        "status" => "error",
+        "detalle" => $e->getMessage()
+    ]);
+}
+
+
 
 // Cargar la API Key
 $config = include(__DIR__ . '/config.php');
@@ -15,7 +108,7 @@ $contexto = "Genera un reporte profesional y detallado con base en la siguiente 
 foreach ($datos as $d) {
     $contexto .= "- Nombre: {$d['nombre']}, Carrera: {$d['carrera']}, Estatus: {$d['estatus_beca']}\n";
 }
-*/
+
 
 $url = "https://api.groq.com/openai/v1/chat/completions";
 
@@ -49,4 +142,5 @@ if (isset($resultado["choices"][0]["message"]["content"])) {
 } else {
     echo json_encode(["status" => "error", "detalle" => $resultado]);
 }
+*/
 ?>
