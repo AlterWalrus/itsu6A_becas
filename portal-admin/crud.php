@@ -26,6 +26,7 @@ $rol = $_SESSION['rol'];
 
 <body
 	class="min-h-screen bg-gradient-to-r from-blue-600 to-purple-500 flex flex-col items-center justify-start py-10 px-4">
+	<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.5%22/%3E%3C/svg%3E')] opacity-50 z-0 pointer-events-none"></div>
 </body>
 <!-- Encabezado -->
 <div class="flex items-center gap-1 mb-1">
@@ -34,7 +35,7 @@ $rol = $_SESSION['rol'];
 </div>
 
 <!-- Contenido principal -->
-<main class="flex-1 w-[98%] mx-auto p-6">
+<main class="flex-1 w-[98%] mx-auto p-6 z-10">
 	<!-- Contenedor semitransparente con sombra -->
 	<div class="bg-white/70 p-4 rounded shadow-md">
 		<!-- Panel dinámico según rol -->

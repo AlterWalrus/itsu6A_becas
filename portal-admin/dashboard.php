@@ -58,6 +58,7 @@ $rol = $_SESSION['rol'];
 </head>
 
 <body class="min-h-screen flex flex-col bg-gradient-to-r from-blue-600 to-purple-500">
+	<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.5%22/%3E%3C/svg%3E')] opacity-50 z-0 pointer-events-none"></div>
 	<!-- Header -->
 	<header class="bg-white shadow-md p-4 flex justify-between items-center">
 		<div class="flex items-center gap-2">
@@ -74,10 +75,14 @@ $rol = $_SESSION['rol'];
 			</button>
 			<div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-10">
 				<ul class="text-gray-700">
+
+					<?php if ($_SESSION['rol'] === 'Admin'): ?>
 					<li id="adminOption">
-						<a id="btnUsuarios" class="block px-4 py-2 hover:bg-gray-100">Administrar usuarios</a></li>
+						<a href="javascript:void(0)" id="btnUsuarios" class="block px-4 py-2 hover:bg-gray-100">Administrar usuarios</a></li>
+					<?php endif; ?>
+					
 					<li>
-						<a id="btnContra" class="block px-4 py-2 hover:bg-gray-100">Cambiar contraseña</a></li>
+						<a href="javascript:void(0)" id="btnContra" class="block px-4 py-2 hover:bg-gray-100">Cambiar contraseña</a></li>
 					<li>
 						<a href="javascript:void(0)" onclick="cerrarSesion()"
 						class="block px-4 py-2 hover:bg-gray-100">Cerrar sesión</a></li>
@@ -87,7 +92,7 @@ $rol = $_SESSION['rol'];
 	</header>
 
 	<!-- Contenido principal -->
-	<main class="flex-1 w-[98%] mx-auto p-6">
+	<main class="flex-1 w-[98%] mx-auto p-6 z-10">
 		<!-- Contenedor semitransparente con sombra -->
 		<div class="bg-white/75 p-4 rounded shadow-md">
 
@@ -161,6 +166,8 @@ $rol = $_SESSION['rol'];
 			<h2 class="text-xl font-bold text-center mb-4 text-blue-700">Cambiar Contraseña</h2>
 
 			<form id="formCambioContra" class="space-y-4">
+				<input type="text" name="usuario" value="<?= $_SESSION['usuario'] ?>" autocomplete="username" hidden>
+
 				<div>
 					<label for="nuevaContra1" class="block text-sm font-medium text-gray-700">Nueva contraseña:</label>
 					<input type="password" id="nuevaContra1" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" autocomplete="new-password" required>
@@ -181,6 +188,7 @@ $rol = $_SESSION['rol'];
 	<script src="js/pdf_logo.js"></script>
 	<script src="js/dashboard.js"></script>
 	<script src="js/cambiar_contra.js"></script>
+	<script src="js/reporte.js"></script>
 </body>
 
 </html>

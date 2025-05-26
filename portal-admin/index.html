@@ -8,28 +8,36 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gradient-to-r from-blue-600 to-purple-500 h-screen flex items-center justify-center">
-
-	<div class="flex flex-col items-center bg-white/30 p-8 rounded-2xl shadow-md w-full max-w-md">
+<!--body class="bg-gradient-to-r from-blue-600 to-purple-500 h-screen flex items-center justify-center"-->
+<body class="relative bg-gradient-to-r from-blue-600 to-purple-500 h-screen flex items-center justify-center overflow-hidden">
+	<!-- Fondo con patrón -->
+	<!--div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cline%20x1%3D%220%22%20y1%3D%2240%22%20x2%3D%2240%22%20y2%3D%220%22%20stroke%3D%22white%22%20stroke-opacity%3D%220.1%22%20stroke-width%3D%222%22/%3E%3C/svg%3E')] opacity-50 z-0 pointer-events-none"></div-->
+	<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%20fill%3D%22white%22%20fill-opacity%3D%220.5%22/%3E%3C/svg%3E')] opacity-50 z-0 pointer-events-none"></div>
+	
+	<div class="flex flex-col items-center bg-white/30 p-8 rounded-2xl shadow-md w-full max-w-md z-10">
 		<div class="flex items-center justify-center mb-4">
 			<img src="img/logo.png" alt="Logo" class="h-28">
 		</div>
 
-		<div class="mb-4 w-full">
-			<input type="text" id="usuario" placeholder="Usuario"
-				class="w-full px-4 py-2 rounded-full text-center outline-none focus:ring-2 focus:ring-blue-400">
-		</div>
+		<form id="formLogin" class="w-full" autocomplete="on">
+			<div class="mb-4">
+				<input type="text" id="usuario" name="usuario" placeholder="Usuario" autocomplete="username"
+					class="w-full px-4 py-2 rounded-full text-center outline-none focus:ring-2 focus:ring-blue-400">
+			</div>
 
-		<div class="mb-10 w-full">
-			<input type="password" id="contrasenia" placeholder="Contraseña"
-				class="w-full px-4 py-2 rounded-full text-center outline-none focus:ring-2 focus:ring-blue-400">
-		</div>
-		<div class="flex flex-col items-center gap-3 w-full">
-			<button id="btnIniciar"
-				class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition w-full">Iniciar
-				sesión
-			</button>
-		</div>
+			<div class="mb-10">
+				<input type="password" id="contrasenia" name="contrasenia" placeholder="Contraseña"
+					autocomplete="current-password"
+					class="w-full px-4 py-2 rounded-full text-center outline-none focus:ring-2 focus:ring-blue-400">
+			</div>
+
+			<div class="flex flex-col items-center gap-3">
+				<button type="submit" id="btnIniciar"
+					class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition w-full">
+					Iniciar sesión
+				</button>
+			</div>
+		</form>
 
 		<script src="js/login.js"></script>
 		<script>

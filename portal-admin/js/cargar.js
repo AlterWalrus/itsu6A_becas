@@ -131,13 +131,11 @@ function crearFormulario(vkeys) {
 		form.insertAdjacentHTML("afterbegin", huellaHTML);
 	}
 
-	// Agregar los campos al formulario
 	[...vkeys].reverse().forEach(key => {
 		if (camposExcluidos.includes(key)) return;
 
 		let inputElement = "";
 		if (key in camposConSelect) {
-			// Select
 			let opciones = Object.entries(camposConSelect[key]).map(([valor, texto]) =>
 				`<option value="${valor}">${texto}</option>`
 			).join("");
@@ -151,12 +149,27 @@ function crearFormulario(vkeys) {
 				</label>
 			`;
 		} else {
-			// Campo de texto
+			// Personalización por campo específico
+			let tipo = "text";
+			let atributosExtra = "";
+			
+			if (key.toLowerCase().includes("capacidad")) {
+				atributosExtra = `maxlength="4" pattern="\\d" inputmode="numeric"`;
+			} else if (key.toLowerCase().includes("correo")) {
+				tipo = "email";
+			} else if (key.toLowerCase().includes("telefono")) {
+				tipo = "tel";
+				atributosExtra = `maxlength="4"`;
+			} else if (key === "No_control") {
+				atributosExtra = `maxlength="6" pattern="\\d{6}" inputmode="numeric"`;
+			}
+
 			inputElement = `
 				<label class="block">
 					<span class="text-sm font-medium">${nombreColumna(key)}</span>
-					<input name="${key}" type="text" placeholder="${nombreColumna(key)}"
-						class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					<input name="${key}" type="${tipo}" placeholder="${nombreColumna(key)}"
+						class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+						${atributosExtra} />
 				</label>
 			`;
 		}

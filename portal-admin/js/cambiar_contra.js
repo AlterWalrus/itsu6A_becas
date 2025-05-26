@@ -1,9 +1,11 @@
 document.getElementById("btnContra").addEventListener("click", () => {
     document.getElementById("modalCambioContra").classList.remove("hidden");
+	document.body.classList.add('modal-open');
 });
 
 document.getElementById("cancelarCambioContra").addEventListener("click", () => {
     document.getElementById("modalCambioContra").classList.add("hidden");
+	document.body.classList.remove('modal-open');
 });
 
 document.getElementById("formCambioContra").addEventListener("submit", function(e) {

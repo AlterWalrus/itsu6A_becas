@@ -7,16 +7,11 @@ const semestres =  {
 		1: "Primero", 2: "Segundo", 3: "Tercero", 4: "Cuarto", 5: "Quinto", 
 		6: "Sexto", 7: "Séptimo", 8: "Octavo", 9: "Noveno", 10: "Décimo"
 	}
+
+var tablaNombre = localStorage.getItem("tablaNombre");
 var cafeterias = {};
 var carreras = {};
 var campos = [];
-
-//CONCEDER PERMISOS SEGUN ROL
-var tablaNombre = localStorage.getItem("tablaNombre");
-
-//if (usuario.rol === "Admin" || usuario.rol === "Miembro_CESA") {
-//	document.getElementById('adminPanel').classList.remove('hidden');
-//}
 
 //MODIFICAR Y ELIMINAR-------------------------------------------------
 var modo = 0;

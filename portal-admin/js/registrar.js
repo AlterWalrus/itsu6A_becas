@@ -27,13 +27,31 @@ document.getElementById("form").addEventListener("submit", function (e) {
 		datos[clave] = valor;
 	}
 	
+	fetch('php/cargar_cafeterias.php')
+	.then(response => response.json())
+	.then(data => {
+		data.forEach(cafe => {
+			if(cafeterias[datos['id_Cafeteria']] === cafe.Nombre){
+				if(cafe.Ocupados == cafe.Capacidad){
+					alert("La cafetería seleccionada está llena.");
+					return;
+				}
+			}
+		});
+	})
+	.catch(error => {
+		console.error("Error al obtener cafeterías:", error);
+	});
+	
 	if(tablaNombre == 'Alumno' && huella == -1){
 		alert("Por favor, registre la huella digital.");
 		return;
 	}
 
 	datos['tabla'] = tablaNombre.toLowerCase();
-	datos['Huella'] = huella;
+	if(tablaNombre === 'Alumno'){
+		datos['Huella'] = huella;
+	}
 	fetch('php/registrar.php', {
 		method: 'POST',
 		headers: {

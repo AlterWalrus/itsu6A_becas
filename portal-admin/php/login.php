@@ -17,7 +17,6 @@ if ($result->num_rows > 0) {
         $_SESSION['usuario'] = $fila["Usuario"];
         $_SESSION['rol'] = $fila["Rol"];
         $_SESSION['nombre'] = $fila["Nombre"];
-        //$_SESSION['id'] = $fila["id"];
 
         echo json_encode([
             "status" => "ok",
