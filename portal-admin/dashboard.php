@@ -66,7 +66,7 @@ $rol = $_SESSION['rol'];
 		</div>
 
 		<!-- Menú contextual -->
-		<div class="relative">
+		<div class="relative z-20">
 			<button id="menuToggle" class="p-2 rounded hover:bg-blue-100 transition">
 				<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
 					viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -79,6 +79,7 @@ $rol = $_SESSION['rol'];
 					<?php if ($_SESSION['rol'] === 'Admin'): ?>
 					<li id="adminOption">
 						<a href="javascript:void(0)" id="btnUsuarios" class="block px-4 py-2 hover:bg-gray-100">Administrar usuarios</a></li>
+						<a href="javascript:void(0)" id="btnAcciones" class="block px-4 py-2 hover:bg-gray-100">Registro de acciones</a></li>
 					<?php endif; ?>
 					
 					<li>

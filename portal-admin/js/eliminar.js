@@ -26,7 +26,26 @@ function confirmarEliminacion() {
 			})
 				.then(response => response.json())
 				.then(data => {
-					if (!data.status === 'ok') {
+					if (data.status === 'ok') {
+						//Bitacora
+						fetch('php/registrar.php', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								tabla: 'accion',
+								Tabla_afectada: tablaNombre,
+								Tipo_accion: 'DELETE',
+								Fecha_cambio: new Date().toISOString().slice(0, 19).replace('T', ' '),
+								id_Usuario: '1'
+							})
+						})
+							.then(res => res.json())
+							.then(resp => {
+								console.log(resp);
+							});
+					} else {
 						alert("Este registro está enlazado con otros registros.");
 					}
 				})

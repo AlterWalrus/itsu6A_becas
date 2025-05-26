@@ -153,7 +153,6 @@ document.addEventListener("change", function (e) {
 	}
 });
 
-
 //Semana
 document.getElementById('filtroSemana').addEventListener('change', (e) => {
 	const valor = e.target.value; // Ej: "2025-W14"
@@ -251,5 +250,10 @@ document.getElementById("btnCarreras").addEventListener("click", function () {
 
 document.getElementById("btnUsuarios").addEventListener("click", function () {
 	localStorage.setItem("tablaNombre", "Usuario");
+	window.location.href = "crud.php";
+});
+
+document.getElementById("btnAcciones").addEventListener("click", function () {
+	localStorage.setItem("tablaNombre", "Accion");
 	window.location.href = "crud.php";
 });

@@ -29,7 +29,7 @@ document.getElementById("btnReporte").addEventListener("click", function (event)
 
 				//Cuerpo
 				doc.setTextColor(40, 40, 40);
-				const maxLineLength = 200;
+				const maxLineLength = 180;
 				const lines = doc.splitTextToSize(textoReporte, maxLineLength);
 				doc.text(lines, 10, 70);
 

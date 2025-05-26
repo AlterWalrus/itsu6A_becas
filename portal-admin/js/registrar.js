@@ -26,30 +26,30 @@ document.getElementById("form").addEventListener("submit", function (e) {
 		}
 		datos[clave] = valor;
 	}
-	
+
 	fetch('php/cargar_cafeterias.php')
-	.then(response => response.json())
-	.then(data => {
-		data.forEach(cafe => {
-			if(cafeterias[datos['id_Cafeteria']] === cafe.Nombre){
-				if(cafe.Ocupados == cafe.Capacidad){
-					alert("La cafetería seleccionada está llena.");
-					return;
+		.then(response => response.json())
+		.then(data => {
+			data.forEach(cafe => {
+				if (cafeterias[datos['id_Cafeteria']] === cafe.Nombre) {
+					if (cafe.Ocupados == cafe.Capacidad) {
+						alert("La cafetería seleccionada está llena.");
+						return;
+					}
 				}
-			}
+			});
+		})
+		.catch(error => {
+			console.error("Error al obtener cafeterías:", error);
 		});
-	})
-	.catch(error => {
-		console.error("Error al obtener cafeterías:", error);
-	});
-	
-	if(tablaNombre == 'Alumno' && huella == -1){
+
+	if (tablaNombre == 'Alumno' && huella == -1) {
 		alert("Por favor, registre la huella digital.");
 		return;
 	}
 
 	datos['tabla'] = tablaNombre.toLowerCase();
-	if(tablaNombre === 'Alumno'){
+	if (tablaNombre === 'Alumno') {
 		datos['Huella'] = huella;
 	}
 	fetch('php/registrar.php', {
@@ -70,16 +70,36 @@ document.getElementById("form").addEventListener("submit", function (e) {
 					resetearCampos();
 					cargarDatos();
 				});
+
+				//Bitacora
+				fetch('php/registrar.php', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						tabla: 'accion',
+						Tabla_afectada: tablaNombre,
+						Tipo_accion: 'INSERT',
+						Fecha_cambio: new Date().toISOString().slice(0, 19).replace('T', ' '),
+						id_Usuario: '1'
+					})
+				})
+				.then(res => res.json())
+				.then(resp => {
+					console.log(resp);
+				});
 			} else {
 				alert('Error: ' + resp.error);
 			}
 		});
+
 });
 
 function resetearCampos() {
 	const form = document.getElementById("form");
 	estadoHuella = document.getElementById("estadoHuella");
-	if(estadoHuella != null){
+	if (estadoHuella != null) {
 		estadoHuella.textContent = "Huella no registrada";
 	}
 	huella = -1;
@@ -100,12 +120,12 @@ document.addEventListener("click", function (e) {
 	if (e.target && e.target.id === "btnCapturarHuella") {
 		const estado = document.getElementById("estadoHuella");
 		document.getElementById("btnCapturarHuella").disabled = true;
-		
+
 		estado.classList.remove("text-green-600");
 		estado.classList.remove("text-red-600");
 		estado.classList.add("text-gray-600");
 		estado.textContent = "Coloque y retire el dedo dos veces...";
-		
+
 		fetch("php/registrar_huella.php", {
 			method: "POST",
 			headers: {

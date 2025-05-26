@@ -147,10 +147,9 @@ DROP TABLE IF EXISTS `checktec`.`accion` ;
 
 CREATE TABLE IF NOT EXISTS `checktec`.`accion` (
   `id_Accion` INT(11) NOT NULL AUTO_INCREMENT,
-  `Tabla_afectada` VARCHAR(45) NOT NULL,
+  `Tabla_afectada` VARCHAR(20) NOT NULL,
   `Tipo_accion` ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
   `Fecha_cambio` DATETIME NOT NULL,
-  `Detalle_cambio` TEXT NULL DEFAULT NULL,
   `id_Usuario` INT(11) NOT NULL,
   PRIMARY KEY (`id_Accion`),
   INDEX `fk_Accion_usuario1_idx` (`id_Usuario` ASC),
@@ -161,7 +160,6 @@ CREATE TABLE IF NOT EXISTS `checktec`.`accion` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

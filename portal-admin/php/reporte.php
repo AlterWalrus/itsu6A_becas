@@ -15,18 +15,6 @@ try {
     $row = $res->fetch_assoc();
     $reporte .= "Total de asistencias: {$row['total']}\n";
 
-    // Alumno con más asistencias
-    $sql = "SELECT a.Nombre, a.Apellido_paterno, COUNT(*) AS total
-            FROM asistencia s
-            JOIN alumno a ON s.id_Alumno = a.id_Alumno
-            WHERE MONTH(s.Fecha_asistencia) = $mesActual AND YEAR(s.Fecha_asistencia) = $anioActual
-            GROUP BY s.id_Alumno
-            ORDER BY total DESC LIMIT 1";
-    $res = $conn->query($sql);
-    if ($row = $res->fetch_assoc()) {
-        $reporte .= "Alumno con más asistencias: {$row['Nombre']} {$row['Apellido_paterno']} ({$row['total']})\n";
-    }
-
     // Carrera con menor asistencia
     $sql = "SELECT c.Nombre, COUNT(*) AS total
             FROM asistencia s
@@ -62,7 +50,7 @@ try {
             ORDER BY total ASC LIMIT 1";
     $res = $conn->query($sql);
     if ($row = $res->fetch_assoc()) {
-        $reporte .= "Semestre con menor actividad: {$row['Semestre']} ({$row['total']})\n";
+        $reporte .= "Grado con menor actividad (Semestre): {$row['Semestre']} ({$row['total']})\n";
     }
 
     // Día más y menos activo
@@ -79,12 +67,14 @@ try {
     $reporte .= "Día menos activo: {$diaMenor['dia']} ({$diaMenor['total']} asistencias)\n";
 
     // Cierre
-    $reporte .= "\n¿Puedes detectar algún patrón relevante o hacer recomendaciones a partir de estos datos?";
+    $reporte .= "\nAnaliza los datos y redacta un reporte profesional donde se mencione toda la información y se hagan predicciones y sugerencias. Solo texto plano y párrafos, no uses **. Sé breve, máximo 450 palabras.";
 
+	/*
     echo json_encode([
         "status" => "ok",
         "reporte" => $reporte
     ]);
+	*/
     $conn->close();
 
 } catch (Exception $e) {
@@ -94,28 +84,16 @@ try {
     ]);
 }
 
-
-
 // Cargar la API Key
 $config = include(__DIR__ . '/config.php');
 $apiKey = $config['GROQ_API_KEY'];
-
-// Texto de ejemplo
-$contexto = "Escribe un analisis sobre la importancia de la correcta alimentación en el desarrollo temprano del ser humano.";
-
-/*
-$contexto = "Genera un reporte profesional y detallado con base en la siguiente lista de asistencias a cobro de becas alimenticias (no uses más que texto plano, no destaques palabras con ** o similar):\n\n";
-foreach ($datos as $d) {
-    $contexto .= "- Nombre: {$d['nombre']}, Carrera: {$d['carrera']}, Estatus: {$d['estatus_beca']}\n";
-}
-
 
 $url = "https://api.groq.com/openai/v1/chat/completions";
 
 $data = [
     "model" => "meta-llama/llama-4-scout-17b-16e-instruct",
     "messages" => [
-        ["role" => "user", "content" => $contexto]
+        ["role" => "user", "content" => $reporte]
     ],
     "temperature" => 0.7
 ];
@@ -142,5 +120,5 @@ if (isset($resultado["choices"][0]["message"]["content"])) {
 } else {
     echo json_encode(["status" => "error", "detalle" => $resultado]);
 }
-*/
+
 ?>

@@ -42,7 +42,7 @@ $rol = $_SESSION['rol'];
 		<div id="adminPanel" class="mb-8">
 			<div class="flex justify-between mb-6">
 				<!-- Botones a la izquierda -->
-				<div class="flex gap-4">
+				<div id="panelBotones" class="flex gap-4">
 					<button id="btnAgregar"
 						class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 shadow flex items-center gap-2">
 						<img src="img/addition.png" alt="Icono usuario" class="w-6 h-6">

@@ -72,5 +72,9 @@ document.getElementById('buscador').addEventListener('input', function () {
 
 window.addEventListener('DOMContentLoaded', () => {
 	document.getElementById("titulo").textContent = " | Administrar " + tablaNombre + "s";
+	if(tablaNombre === 'Accion'){
+		document.getElementById("titulo").textContent = " | Registro de acciones";
+		document.getElementById("panelBotones").classList.add('hidden');
+	}
 	cargarDatos();
 });

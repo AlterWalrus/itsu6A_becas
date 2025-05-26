@@ -115,6 +115,25 @@ function confirmarEdicion() {
 				.then(data => {
 					if (data.status === 'ok') {
 						cargarDatos();
+
+						//Bitacora
+						fetch('php/registrar.php', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								tabla: 'accion',
+								Tabla_afectada: tablaNombre,
+								Tipo_accion: 'UPDATE',
+								Fecha_cambio: new Date().toISOString().slice(0, 19).replace('T', ' '),
+								id_Usuario: '1'
+							})
+						})
+							.then(res => res.json())
+							.then(resp => {
+								console.log(resp);
+							});
 					} else {
 						console.error(data.error);
 						alert('Error al guardar cambios: ' + data.error);
@@ -123,7 +142,7 @@ function confirmarEdicion() {
 				.catch(err => {
 					console.error(err);
 					alert('Error en la comunicación con el servidor.');
-				}); 
+				});
 		}
 	});
 }
