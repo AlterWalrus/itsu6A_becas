@@ -1,6 +1,4 @@
 //MODAL PA AGREGAR WNS------------------------------------------------------
-var huella = -1;
-
 document.getElementById('btnAgregar').addEventListener('click', () => {
 	document.getElementById('agregar').classList.remove('hidden');
 	document.body.classList.add('modal-open');
@@ -47,6 +45,8 @@ document.getElementById("form").addEventListener("submit", function (e) {
 		alert("Por favor, registre la huella digital.");
 		return;
 	}
+
+	console.log(datos);
 
 	datos['tabla'] = tablaNombre.toLowerCase();
 	if (tablaNombre === 'Alumno') {
@@ -118,9 +118,44 @@ function resetearCampos() {
 
 document.addEventListener("click", function (e) {
 	if (e.target && e.target.id === "btnCapturarHuella") {
-		const estado = document.getElementById("estadoHuella");
 		document.getElementById("btnCapturarHuella").disabled = true;
 
+		// Paso 1: Obtener IP de la computadora con Node-RED
+		fetch("php/obtener_ip_servidor.php")
+			.then(res => res.text())
+			.then(ip => {
+				console.log("IP del servidor:", ip);
+
+				// Paso 2: Enviar solicitud a Node-RED en esa IP
+				return fetch(`http://${ip.trim()}:1880/enroll`);
+			})
+			.then(response => response.text())
+			.then(data => {
+				console.log("Respuesta de Node-RED:", data);
+			})
+			.catch(error => {
+				console.error("Error al contactar Node-RED:", error);
+			});
+	}
+});
+
+/*
+document.addEventListener("click", function (e) {
+	if (e.target && e.target.id === "btnCapturarHuella") {
+		//const estado = document.getElementById("estadoHuella");
+		document.getElementById("btnCapturarHuella").disabled = true;
+
+		fetch("http://localhost:1880/enroll")
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+	}
+});
+		
 		estado.classList.remove("text-green-600");
 		estado.classList.remove("text-red-600");
 		estado.classList.add("text-gray-600");
@@ -155,6 +190,7 @@ document.addEventListener("click", function (e) {
 				estado.classList.add("text-red-600");
 				document.getElementById("btnCapturarHuella").disabled = false;
 			});
+			
 	}
 });
-
+*/

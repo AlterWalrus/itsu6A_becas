@@ -6,7 +6,7 @@ document.getElementById("formLogin").addEventListener("submit", function (event)
 	const contrasenia = document.getElementById("contrasenia").value;
 
 	if (!usuario || !contrasenia) {
-		alert("Por favor, completa ambos campos.");
+		alert("Por favor, rellena ambos campos.");
 		return;
 	}
 
@@ -23,6 +23,20 @@ document.getElementById("formLogin").addEventListener("submit", function (event)
 		console.log(data);
 		if (data.status === "ok") {
 			window.location.href = "dashboard.php";
+			
+			fetch('php/modificar.php', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					tabla: "usuario",
+					cambios: {
+						id_: data.id,
+						Ultimo_acceso: obtenerFechaHoraLocal()
+					}
+				})
+			});
 		} else {
 			alert("Credenciales incorrectas");
 		}
@@ -31,6 +45,18 @@ document.getElementById("formLogin").addEventListener("submit", function (event)
 		console.error("Error en la solicitud:", error);
 	});
 });
+
+function obtenerFechaHoraLocal() {
+	const ahora = new Date();
+	const yyyy = ahora.getFullYear();
+	const mm = String(ahora.getMonth() + 1).padStart(2, '0');
+	const dd = String(ahora.getDate()).padStart(2, '0');
+	const hh = String(ahora.getHours()).padStart(2, '0');
+	const mi = String(ahora.getMinutes()).padStart(2, '0');
+	const ss = String(ahora.getSeconds()).padStart(2, '0');
+	return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+}
+
 
 /*
 document.getElementById("btnIniciar").addEventListener("click", function (event) {

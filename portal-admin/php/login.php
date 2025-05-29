@@ -17,12 +17,14 @@ if ($result->num_rows > 0) {
         $_SESSION['usuario'] = $fila["Usuario"];
         $_SESSION['rol'] = $fila["Rol"];
         $_SESSION['nombre'] = $fila["Nombre"];
+		$_SESSION['id'] = $fila["id_Usuario"];
 
         echo json_encode([
             "status" => "ok",
             "usuario" => $fila["Usuario"],
             "nombre" => $fila["Nombre"],
-            "rol" => $fila["Rol"]
+            "rol" => $fila["Rol"],
+			"id" => $fila["id_Usuario"]
         ]);
 		
     } else {

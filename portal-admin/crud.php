@@ -141,6 +141,7 @@ $rol = $_SESSION['rol'];
 <script src="js/registrar.js"></script>
 <script src="js/modificar.js"></script>
 <script src="js/eliminar.js"></script>
+
 </body>
 
 </html>

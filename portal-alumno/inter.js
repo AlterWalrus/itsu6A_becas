@@ -4,6 +4,87 @@ const CONTACTO = "\r\n\r\nPara más información contacta a cesa.itsu.95@gmail.c
 let duracion = 1000;
 let resultadoTimeout;
 
+
+const ws = new WebSocket("ws://localhost:1880/huella");
+ws.onmessage = function(event) {
+	const mensaje = event.data.trim();
+	console.log(mensaje);
+
+	if (mensaje.startsWith("DETECT ")) {
+		const idHuella = mensaje.split(" ")[1];
+
+		fetch("php/registrar_asistencia_completa.php", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: new URLSearchParams({
+				huella: idHuella,
+				cafeteria: CAFE_ID
+			})
+		})
+		.then(res => res.json())
+		.then(result => {
+			duracion = 8000;
+
+			console.log(result);
+			switch(result.status){
+				case 'asistencia_registrada':
+					duracion = 5000;
+					mostrarResultado(true, "¡Buen provecho, " + result.nombre + "!");
+					break;
+				case 'ya_asistio':
+					mostrarResultado(false, result.nombre + ", ya has cobrado tu beca hoy." + CONTACTO);
+					break;
+				case 'suspendido':
+					mostrarResultado(false, result.nombre + ", tu beca está actualmente suspendida." + CONTACTO);
+					break;
+				case 'cafeteria_incorrecta':
+					mostrarResultado(false, result.nombre + ", tu beca es para otra cafetería." + CONTACTO);
+					break;
+				case 'no_encontrado':
+					mostrarResultado(false, "Huella no reconocida." + CONTACTO);
+					break;
+				default:
+					console.error("Error inesperado:", result);
+			}
+		})
+		.catch(error => {
+			console.error("Error al registrar asistencia:", error);
+		});
+	}
+};
+
+//Comunicacion con node-red
+/*
+const ws = new WebSocket("ws://localhost:1880/huella");
+ws.onmessage = function(event) {
+    const mensaje = event.data.trim();
+    console.log(mensaje);
+	if(mensaje.startsWith("DETECT ")){
+		const id = mensaje.split(" ")[1];
+
+		fetch("php/cargar_alumno.php", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: "huella=" + encodeURIComponent(id)
+		})
+		.then(res => res.json())
+		.then(result => {
+			console.log(result);
+			if(result.status === 'ok'){
+				duracion = 5000;
+				mostrarResultado(true, "¡Buen provecho, " + result.alumno.Nombre + "!");
+			}
+		})
+		.catch(error => {
+			console.error("Error en la solicitud de asistencia:", error);
+		});
+	}
+};
+*/
 // Cargar cafeterías
 var cafeterias = {};
 cargarDatos();
@@ -21,6 +102,7 @@ async function cargarDatos(){
 	});
 }
 
+/*
 setInterval(() => {
 	fetch("php/verificar_huella.php")
 		.then(res => res.json())
@@ -73,7 +155,7 @@ setInterval(() => {
 			// No hacer nada si el archivo no existe o hay error
 		});
 }, 2000);
-
+*/
 function mostrarResultado(exito, mensaje) {
 	clearTimeout(resultadoTimeout);
 
@@ -87,9 +169,13 @@ function mostrarResultado(exito, mensaje) {
 	const gifError = document.getElementById("gifError");
 
 	if (exito) {
+		var audio = new Audio('valid.mp3');
+		audio.play();
 		gifChecked.classList.remove("hidden");
 		gifError.classList.add("hidden");
 	} else {
+		var audio = new Audio('invalid.wav');
+		audio.play();
 		gifChecked.classList.add("hidden");
 		gifError.classList.remove("hidden");
 	}

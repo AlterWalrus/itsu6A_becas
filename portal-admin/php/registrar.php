@@ -10,6 +10,11 @@ try {
 		throw new Exception("Faltan datos para insertar");
 	}
 
+	// Si el campo 'password' existe, hashearlo antes de guardar
+	if (isset($input['contrasenia'])) {
+		$input['contrasenia'] = password_hash($input['contrasenia'], PASSWORD_DEFAULT);
+	}
+
 	$columnas = array_keys($input);
 	$valores = array_values($input);
 	$placeholders = implode(',', array_fill(0, count($columnas), '?'));
@@ -18,7 +23,6 @@ try {
 	$sql = "INSERT INTO `$tabla` ($nombresColumnas) VALUES ($placeholders)";
 	$stmt = $conn->prepare($sql);
 
-	// Construir dinámicamente los tipos de datos para bind_param (asumimos todo como string 's' por simplicidad)
 	$tipos = str_repeat('s', count($valores));
 	$stmt->bind_param($tipos, ...$valores);
 

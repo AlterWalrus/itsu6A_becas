@@ -1,5 +1,6 @@
 //CARGAR WNS
 const camposExcluidos = ["Huella", "Contrasenia"];
+var usuarios = {};
 
 async function cargarDatos() {
 	try {
@@ -27,8 +28,19 @@ async function cargarDatos() {
 			carreras[carrera.id_Carrera] = carrera.Nombre;
 		});
 
+		// Cargar usuarios
+		const resUsuarios = await fetch("php/cargar.php", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: `tablaNombre=usuario`
+		});
+		const dataUsuarios = await resUsuarios.json();
+		usuarios = {};
+		dataUsuarios.forEach(usuario => {
+			usuarios[usuario.id_Usuario] = usuario.Nombre;
+		});
+
 		// Cargar tabla principal
-		console.log(tablaNombre);
 		const resDatos = await fetch("php/cargar.php", {
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -97,6 +109,8 @@ function crearCuerpoTabla(data) {
 				html += `<td class="px-2 py-2 editable" data-key="${key}">${cafeterias[fila[key]]}</td>`;
 			} else if (key == "Semestre") {
 				html += `<td class="px-2 py-2 editable" data-key="${key}">${semestres[fila[key]]}</td>`;
+			} else if (key == "id_Usuario") {
+				html += `<td class="px-2 py-2 editable" data-key="${key}">${usuarios[fila[key]]}</td>`;
 			} else {
 				html += `<td class="px-2 py-2 editable" data-key="${key}">${fila[key]}</td>`;
 			}
@@ -132,6 +146,19 @@ function crearFormulario(vkeys) {
 		form.insertAdjacentHTML("afterbegin", huellaHTML);
 	}
 
+	if (tablaNombre === "Usuario") {
+		const passwordHTML = `
+			<div class="mb-4">
+				<label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
+				<input type="password" name="contrasenia" id="password" autocomplete="current-password"
+					class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					placeholder="Ingresa la contraseña">
+			</div>
+		`;
+		form.insertAdjacentHTML("afterbegin", passwordHTML);
+	}
+
+
 	[...vkeys].reverse().forEach(key => {
 		if (camposExcluidos.includes(key)) return;
 
@@ -160,9 +187,9 @@ function crearFormulario(vkeys) {
 				tipo = "email";
 			} else if (key.toLowerCase().includes("telefono")) {
 				tipo = "tel";
-				atributosExtra = `maxlength="4"`;
+				atributosExtra = `maxlength="10" pattern="\\d{10}" inputmode="numeric"`;
 			} else if (key === "No_control") {
-				atributosExtra = `maxlength="6" pattern="\\d{6}" inputmode="numeric"`;
+				atributosExtra = `maxlength="8" pattern="\\d{8}" inputmode="numeric"`;
 			}
 
 			inputElement = `

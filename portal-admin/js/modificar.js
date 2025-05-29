@@ -101,6 +101,7 @@ function confirmarEdicion() {
 		});
 
 		if (huboCambios) {
+			console.log(cambios);
 			fetch('php/modificar.php', {
 				method: 'POST',
 				headers: {
